@@ -1,0 +1,72 @@
+version: '3.9'
+
+services:
+
+  nginx:
+    build:
+      context: ../..
+      dockerfile: nginx/Dockerfile
+    restart: unless-stopped
+    working_dir: /application
+    volumes:
+      - ../:/application
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8002:80
+    networks:
+      - backend
+
+
+  php-fpm:
+    build:
+      context: ../..
+      dockerfile: php-fpm/Dockerfile
+    restart: unless-stopped
+    container_name: php
+    volumes:
+      - ../:/application
+      - ./php-fpm/php-ini-overrides.ini:/etc/php/8.0/fpm/conf.d/99-overrides.ini
+    networks:
+      - backend
+#  php-cli:
+#      build:
+#          context: ../..
+#          dockerfile: laravel/docker/php_cli/Dockerfile
+#      restart: unless-stopped
+#      container_name: php_cli
+#      volumes:
+#          - ../:/application
+#          - ./php_cli/php-ini-overrides.ini:/etc/php/8.0/cli/conf.d/99-overrides.ini
+#      networks:
+#          - backend
+
+  mysql:
+      image: bitnami/mariadb:latest
+      restart: always
+      environment:
+          MARIADB_ROOT_PASSWORD: root123
+          MYSQL_DATABASE: laravel2
+
+
+#          PMA_HOST: mysql
+
+
+      #      image: mariadb
+#      restart: unless-stopped
+#      environment:
+#          MARIADB_ROOT_PASSWORD: root123
+      ports:
+          - 3306:3306
+#      volumes:
+#          - ./mysql:/var/lib/mysql
+      networks:
+       - backend
+
+
+
+networks:
+  backend:
+    name: My_network
+    driver: bridge
+
+
