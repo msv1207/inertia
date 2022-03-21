@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,6 +25,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->name('dashboard');
+
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('posts', PostController::class);
+
+require __DIR__.'/auth.php';

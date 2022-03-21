@@ -1,10 +1,27 @@
-<template>
-    <Head title="Forgot Password" />
+<script setup>
+import BreezeButton from '@/Components/Button.vue';
+import BreezeGuestLayout from '@/Layouts/Guest.vue';
+import BreezeInput from '@/Components/Input.vue';
+import BreezeLabel from '@/Components/Label.vue';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
 
-    <jet-authentication-card>
-        <template #logo>
-            <jet-authentication-card-logo />
-        </template>
+defineProps({
+    status: String,
+});
+
+const form = useForm({
+    email: '',
+});
+
+const submit = () => {
+    form.post(route('password.email'));
+};
+</script>
+
+<template>
+    <BreezeGuestLayout>
+        <Head title="Forgot Password" />
 
         <div class="mb-4 text-sm text-gray-600">
             Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
@@ -14,60 +31,19 @@
             {{ status }}
         </div>
 
-        <jet-validation-errors class="mb-4" />
+        <BreezeValidationErrors class="mb-4" />
 
         <form @submit.prevent="submit">
             <div>
-                <jet-label for="email" value="Email" />
-                <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus />
+                <BreezeLabel for="email" value="Email" />
+                <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <BreezeButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Email Password Reset Link
-                </jet-button>
+                </BreezeButton>
             </div>
         </form>
-    </jet-authentication-card>
+    </BreezeGuestLayout>
 </template>
-
-<script>
-    import { defineComponent } from 'vue'
-    import { Head } from '@inertiajs/inertia-vue3';
-    import JetAuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
-    import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
-    import JetButton from '@/Jetstream/Button.vue'
-    import JetInput from '@/Jetstream/Input.vue'
-    import JetLabel from '@/Jetstream/Label.vue'
-    import JetValidationErrors from '@/Jetstream/ValidationErrors.vue'
-
-    export default defineComponent({
-        components: {
-            Head,
-            JetAuthenticationCard,
-            JetAuthenticationCardLogo,
-            JetButton,
-            JetInput,
-            JetLabel,
-            JetValidationErrors
-        },
-
-        props: {
-            status: String
-        },
-
-        data() {
-            return {
-                form: this.$inertia.form({
-                    email: ''
-                })
-            }
-        },
-
-        methods: {
-            submit() {
-                this.form.post(this.route('password.email'))
-            }
-        }
-    })
-</script>
