@@ -4,6 +4,11 @@ use App\Http\Controllers\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Auth\GoogleSocialiteController;
+
+
+Route::get('auth/google', [GoogleSocialiteController::class, 'redirectToGoogle']);
+Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback']);
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +29,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
+Route::view('/login2', 'auth/login');
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 

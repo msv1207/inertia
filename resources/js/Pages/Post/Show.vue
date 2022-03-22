@@ -7,7 +7,6 @@
                 {{posts.title}}
             </h2>
         </template>
-
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
@@ -21,6 +20,7 @@
                             :href="route('posts.edit', posts.id)"
                         >Edit
                         </Link>
+
                         <div>
                         <Link
                             @click="destroy(posts.id)"
@@ -34,20 +34,7 @@
                             >
                                 Posts Create
                             </Link>
-<!--                        </div>-->
-<!--                        <table>-->
-<!--                            <thead class="font-bold bg-gray-300 border-b-2">-->
-<!--                            <td class="px-4 py-2">Title</td>-->
-<!--                            <td class="px-4 py-2">Description</td>-->
-<!--                            </thead>-->
-<!--                            <tbody>-->
-<!--                            <td class="px-4 py-2">{{ posts.title }}</td>-->
-<!--                            <td class="px-4 py-2">-->
-<!--                                {{ posts.description }}-->
-<!--                            </td>-->
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                        <pagination :links="posts.links" />-->
+
                         </div>
                     </div>
                 </div>
@@ -61,15 +48,41 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeNavLink from "@/Components/NavLink.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
+import { bTreeView } from 'vue3-treeview';
 export default {
+
+
     components: {
         BreezeAuthenticatedLayout,
         Head,
         BreezeNavLink,
         Link,
+        bTreeView
     },
     props: {
         posts: Object,
+    },
+    data() {
+        return {
+            config: {
+                roots: ["id1", "id2"],
+            },
+            nodes: {
+                id1: {
+                    text: "text1",
+                    children: ["id11", "id12"],
+                },
+                id11: {
+                    text: "text11",
+                },
+                id12: {
+                    text: "text12",
+                },
+                id2: {
+                    text: "text2",
+                },
+            },
+        }
     },
     methods: {
         destroy(id) {
