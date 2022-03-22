@@ -29,19 +29,17 @@
                         </div>
                         <table>
                             <thead class="font-bold bg-gray-300 border-b-2">
-                            <td class="px-4 py-2">ID</td>
-                            <td class="px-4 py-2">Title</td>
-                            <td class="px-4 py-2">Description</td>
+                            <td v-on:click="sort('id')">+1</td>
+<!--                            <p>Кнопка выше была нажата {{ counter }} раз</p>-->
+                            <td v-on:click="sort('title')" >Title</td>
+                            <td>Description</td>
                             <td class="px-4 py-2">Action</td>
                             </thead>
                             <tbody>
                             <tr v-for="post in posts.data" :key="post.id">
-
                                 <td class="px-4 py-2">{{ post.id }}</td>
                                 <td class="px-4 py-2">{{ post.title }}</td>
-                                <td class="px-4 py-2">
-                                    {{ post.description }}
-                                </td>
+                                <td class="px-4 py-2">{{ post.description }}</td>
                                 <td class="px-4 py-2 font-extrabold">
                                     <Link
                                         class="text-green-700"
@@ -64,6 +62,8 @@
                             </tr>
                             </tbody>
                         </table>
+                        debug: sort={{currentSort}}, dir={{currentSortDir}}
+
                         <pagination :links="posts.links" />
                     </div>
                 </div>
@@ -85,12 +85,39 @@ export default {
         Link,
     },
     props: {
+        // sortBy: 'ID',
+        // sortDirection: 'asc',
         posts: Object,
     },
+    data(){
+        return {
+            sortBy: 'id',
+            sortDirection: 'acs',
+            counter: 0
+        }
+    },
+
+    // computed: {
+    //     sortedProducts: function(){
+    //         return this.products.sort((p1,p2) => {
+    //             let modifier = 1;
+    //             if(this.sortDirection === 'desc') modifier = -1;
+    //             if(p1[this.sortBy] < p2[this.sortBy]) return -1 * modifier; if(p1[this.sortBy] > p2[this.sortBy]) return 1 * modifier;
+    //             return 0;
+    //         });
+    //     }
+    // },
+
     methods: {
         destroy(id) {
             this.$inertia.delete(route("posts.destroy", id));
         },
+        sort: function(s){
+            if(s === this.sortBy) {
+                this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+            }
+            this.sortBy = s;
+        }
     },
 };
 </script>

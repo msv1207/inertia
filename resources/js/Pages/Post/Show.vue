@@ -20,7 +20,6 @@
                             :href="route('posts.edit', posts.id)"
                         >Edit
                         </Link>
-
                         <div>
                         <Link
                             @click="destroy(posts.id)"
@@ -48,7 +47,6 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeNavLink from "@/Components/NavLink.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
-import { bTreeView } from 'vue3-treeview';
 export default {
 
 
@@ -57,32 +55,9 @@ export default {
         Head,
         BreezeNavLink,
         Link,
-        bTreeView
     },
     props: {
         posts: Object,
-    },
-    data() {
-        return {
-            config: {
-                roots: ["id1", "id2"],
-            },
-            nodes: {
-                id1: {
-                    text: "text1",
-                    children: ["id11", "id12"],
-                },
-                id11: {
-                    text: "text11",
-                },
-                id12: {
-                    text: "text12",
-                },
-                id2: {
-                    text: "text2",
-                },
-            },
-        }
     },
     methods: {
         destroy(id) {
