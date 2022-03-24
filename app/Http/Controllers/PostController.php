@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Worker;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
@@ -14,11 +15,15 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $posts = Post::latest()->paginate(10);
-
-        return Inertia::render('Post/Index', ['posts' => $posts]);
+        $posts = Post::latest()->paginate(20);
+        $worker= Worker::with('teamOfPeople.department')->get();
+        return Inertia::render('Post/Index', [
+            'posts' => $posts,
+            'dataModel' => $worker
+        ]);
     }
 
     /**
@@ -57,7 +62,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-//        return $post;
         return Inertia::render('Post/Show', [
             'posts' => [
             'id' => $post->id,

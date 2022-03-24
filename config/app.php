@@ -141,7 +141,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-
+        Elasticquent\ElasticquentServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -196,6 +196,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
+
     ])->toArray(),
 
 ];

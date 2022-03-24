@@ -28,18 +28,27 @@ services:
       - ./php-fpm/php-ini-overrides.ini:/etc/php/8.0/fpm/conf.d/99-overrides.ini
     networks:
       - backend
-#  php-cli:
-#      build:
-#          context: ../..
-#          dockerfile: laravel/docker/php_cli/Dockerfile
-#      restart: unless-stopped
-#      container_name: php_cli
-#      volumes:
-#          - ../:/application
-#          - ./php_cli/php-ini-overrides.ini:/etc/php/8.0/cli/conf.d/99-overrides.ini
-#      networks:
-#          - backend
+  es:
+      image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+      ports:
+          - "9200:9200"
+          - "9300:9300"
+      environment:
+          - discovery.type=single-node
+      networks:
+        - backend
 
+
+  redis:
+      image: redis:alpine
+      container_name: myapp-redis
+      command: redis-server --appendonly yes --requirepass "${REDIS_PASSWORD}"
+      volumes:
+          - ./data/redis:/data
+      ports:
+          - "6379:6379"
+      networks:
+          - backend
   mysql:
       image: bitnami/mariadb:latest
       restart: always
@@ -47,18 +56,9 @@ services:
           MARIADB_ROOT_PASSWORD: root123
           MYSQL_DATABASE: laravel2
 
-
-#          PMA_HOST: mysql
-
-
-      #      image: mariadb
-#      restart: unless-stopped
-#      environment:
-#          MARIADB_ROOT_PASSWORD: root123
       ports:
           - 3306:3306
-#      volumes:
-#          - ./mysql:/var/lib/mysql
+
       networks:
        - backend
 
