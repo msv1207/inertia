@@ -7,9 +7,14 @@
                 Post
             </h2>
 <!--            <tree-view  id="my-tree" :initial-model="tree(dataModel)"></tree-view>-->
-
         </template>
+        <div id="app">
+            <TreeBrowser
+                :nodes="root"
+                @onClick="nodeWasClicked"
 
+            />
+        </div>
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
@@ -66,7 +71,7 @@
                     </div>
                 </div>
 <!--                {{tree(6)}}-->
-<!--                {{dataModel1[0]["children"]}}-->
+                {{posts.data}}
             </div>
         </div>
     </BreezeAuthenticatedLayout>
@@ -77,33 +82,40 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeNavLink from "@/Components/NavLink.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
-import TreeView from "@grapoza/vue-tree";
+import TreeBrowser from "@/components/TreeBrowser.vue";
+import rootData from "../root.json";
 export default {
+    name: "app",
     components: {
         BreezeAuthenticatedLayout,
         Head,
+        TreeBrowser,
         BreezeNavLink,
         Link,
-        TreeView
     },
     props: {
         posts: [],
+        categories: [],
         dataModel: []
     },
     data(){
         return {
-            currentSort: 'id',
-            currentSortDir: 'desc',
-            dataModel1: [
-                {id: "numberOrString", label: "Root Node", children: [
-                        {id: 1, label: "Child Node",  children: [
-                                {id: 1, label: "Child Node"},
-                                {id: "node2", label: "Second Child"}]},
-                        {id: "node2", label: "Second Child"}]
-                }],
+            root: this.categories
+            // root: this.posts,
         }
     },
+    watch: {
+        root: {
+            deep: true,
+            handler: (newRoot) => {
+                console.log(newRoot);
+            },
+        },
+    },
     computed:{
+        nodeWasClicked(node) {
+            // alert(node.name);
+        },
         sortedPosts:function() {
             return this.posts.data.sort((a,b) => {
                 let modifier = 1;
@@ -155,6 +167,7 @@ export default {
         destroy(id) {
             this.$inertia.delete(route("posts.destroy", id));
         },
+
         sort: function(s){
             if(s === this.currentSort) {
                 this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';

@@ -13,6 +13,25 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <form @submit.prevent="submit">
+
+                            <div>
+                                <label for="title">Title</label>
+                                <input
+                                    type="text"
+                                    v-model="form.categoryTitle"
+                                    class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                                />
+                            </div>
                             <div>
                                 <label for="title">Title</label>
                                 <input
@@ -87,6 +106,7 @@ export default {
     setup() {
         const form = useForm({
             title: null,
+            categoryTitle: null,
             description: null,
         });
 

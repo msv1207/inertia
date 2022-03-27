@@ -14,6 +14,24 @@
                     <div class="p-6 bg-white border-b border-gray-200">
                         <form @submit.prevent="submit">
                             <div>
+                                <label for="title">Title category</label>
+                                <input
+                                    type="text"
+                                    v-model="form.categoryTitle"
+                                    class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                                />
+                            </div>
+                            <div>
                                 <label for="title">Title</label>
                                 <input
                                     type="text"
@@ -86,6 +104,7 @@ export default {
     setup(props) {
         const form = useForm({
             title: props.post.title,
+            categoryTitle: props.post.categoryTitle,
             description: props.post.description,
         });
 

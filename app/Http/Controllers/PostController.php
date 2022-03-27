@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\SubCategory;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
+//use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -19,9 +22,12 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->paginate(20);
+        $category=SubCategory::with('categories.posts')->get();
         $worker= Worker::with('teamOfPeople.department')->get();
+//        return $category;
         return Inertia::render('Post/Index', [
             'posts' => $posts,
+            'categories' => $category,
             'dataModel' => $worker
         ]);
     }
@@ -44,12 +50,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        Post::create(
-            Request::validate([
-                'title' => ['required', 'max:90'],
-                'description' => ['required'],
-            ])
-        );
+        SubCategory::with('categories.posts')->create($request->all());
 
         return Redirect::route('posts.index');
     }
@@ -79,10 +80,12 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+//        dd ($post->category()->get()[0]->sub_category()->get()[0]->title);
         return Inertia::render('Post/Edit', [
             'post' => [
                 'id' => $post->id,
                 'title' => $post->title,
+                'categoryTitle' => $post->category()->get()[0]->sub_category()->get()[0]->title,
                 'description' => $post->description
             ]
         ]);
@@ -97,11 +100,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $data = Request::validate([
-            'title' => ['required', 'max:90'],
-            'description' => ['required'],
-        ]);
-        $post->update($data);
+//        return($request->title);
+//$request->categoryTitle;
+//        $data = Request::validate([
+//            'title' => ['required', 'max:90'],
+//            'categoryTitle' => ['required', 'max:90'],
+//            'description' => ['required'],
+//        ]);
+//        $post->category()->
+        $post->category()->get()[0]->sub_category()->update(['title' => $request->categoryTitle]);
+        $post->update($request->all());
 
 
         return Redirect::route('posts.index');
