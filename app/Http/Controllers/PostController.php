@@ -50,7 +50,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        SubCategory::with('categories.posts')->create($request->all());
+       $mainCat= SubCategory::create(['title' => $request->mainCategoryTittle]);
+//       return $request;
+       $cat= $mainCat->categories()->save(Category::create(['title' => $request->categoryTitle]));
+          $cat->posts()->save(Post::create(['title' => $request->title,
+            'description'=> $request->description]));
+//        $mainCat->categories()->get()[0]->posts()->save(Post::create(['title' => $request->title,
+//            'description'=> $request->description]));
+//        save(Category::create(['title' => $request->categoryTitle]));
+
+//        $mainCat->categories()
+//        Category::create([
+//            'title' => $request->categoryTitle,
+//        ]);
+//       Post::create([
+//
+//       ])
+//       return $request->all();
+//        SubCategory::with('categories.posts')->create($request->all());
 
         return Redirect::route('posts.index');
     }
@@ -80,11 +97,15 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+//        dd($post->category()->get());
+
 //        dd ($post->category()->get()[0]->sub_category()->get()[0]->title);
+//        dd($post->category()->get()[0]->title);
         return Inertia::render('Post/Edit', [
             'post' => [
                 'id' => $post->id,
                 'title' => $post->title,
+                'mainCategoryTitle' => $post->category()->get()[0]->title,
                 'categoryTitle' => $post->category()->get()[0]->sub_category()->get()[0]->title,
                 'description' => $post->description
             ]
@@ -100,20 +121,19 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-//        return($request->title);
-//$request->categoryTitle;
-//        $data = Request::validate([
-//            'title' => ['required', 'max:90'],
-//            'categoryTitle' => ['required', 'max:90'],
-//            'description' => ['required'],
-//        ]);
-//        $post->category()->
-        $post->category()->get()[0]->sub_category()->update(['title' => $request->categoryTitle]);
+
+
+
+        $post->category()->get()[0]
+            ->update(['title' => $request->categoryTitle]);
+        $post->category()->get()[0] ->sub_category()
+            ->update(['title' => $request->mainCategoryTitle]);
         $post->update($request->all());
 
 
         return Redirect::route('posts.index');
     }
+
 
     /**
      * Remove the specified resource from storage.

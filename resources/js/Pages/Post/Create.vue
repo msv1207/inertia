@@ -15,7 +15,25 @@
                         <form @submit.prevent="submit">
 
                             <div>
-                                <label for="title">Title</label>
+                                <label for="title">Main Category title</label>
+                                <input
+                                    type="text"
+                                    v-model="form.mainCategoryTittle"
+                                    class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                                />
+                            </div>
+                            <div>
+                                <label for="title">Category title</label>
                                 <input
                                     type="text"
                                     v-model="form.categoryTitle"
@@ -106,6 +124,7 @@ export default {
     setup() {
         const form = useForm({
             title: null,
+            mainCategoryTittle: null,
             categoryTitle: null,
             description: null,
         });

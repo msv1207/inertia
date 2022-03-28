@@ -6,6 +6,42 @@
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Post
             </h2>
+
+            <form @submit.prevent="submit">
+                <div>
+                    <label for="search">search</label>
+                    <input
+                        type="text"
+                        id="search"
+                        v-model="form.search"
+                        class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                    />
+                </div>
+                <!-- submit -->
+                <div class="flex items-center mt-4">
+                    <button
+                        class="
+                                        px-6
+                                        py-2
+                                        text-white
+                                        bg-gray-900
+                                        rounded
+                                    "
+                    >
+                        search
+                    </button>
+                </div>
+            </form>
 <!--            <tree-view  id="my-tree" :initial-model="tree(dataModel)"></tree-view>-->
         </template>
         <div id="app">
@@ -71,7 +107,7 @@
                     </div>
                 </div>
 <!--                {{tree(6)}}-->
-                {{posts.data}}
+<!--                {{posts.data}}-->
             </div>
         </div>
     </BreezeAuthenticatedLayout>
@@ -83,8 +119,24 @@ import BreezeNavLink from "@/Components/NavLink.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import TreeBrowser from "@/components/TreeBrowser.vue";
-import rootData from "../root.json";
+import { Inertia } from '@inertiajs/inertia'
+import { reactive } from 'vue'
+
+// import rootData from "../root.json";
 export default {
+
+        setup () {
+            const form = reactive({
+                search: null,
+
+            })
+
+            function submit() {
+                Inertia.post('/search', form)
+            }
+
+            return { form, submit }
+        },
     name: "app",
     components: {
         BreezeAuthenticatedLayout,
@@ -98,9 +150,11 @@ export default {
         categories: [],
         dataModel: []
     },
+
     data(){
         return {
-            root: this.categories
+            root: this.categories,
+            search: ''
             // root: this.posts,
         }
     },
@@ -129,41 +183,13 @@ export default {
     },
     methods: {
 
+            // submit() {
+            //     // alert(this.form);
+            //     this.$inertia.post(route("search", search));
+            //
+            //     // this.form.post(route("search"));
+            // },
 
-        // remove (arr, indexes) {
-        //     var arrayOfIndexes = [].slice.call(arguments, 1);  // (1)
-        //     return arr.filter(function (item, index) {         // (2)
-        //         return arrayOfIndexes.indexOf(index) == -1;      // (3)
-        //     });
-        // },
-        // tree(s)
-        // { let sum='';
-        //     for (let dataModelKey in this.dataModel) {
-        //         this.dataModel1[dataModelKey]["label"]=this.dataModel[dataModelKey]["name"];
-        //         // alert(this.dataModel1[dataModelKey]["label"])
-        //         this.dataModel1[dataModelKey]["children"]=this.dataModel[dataModelKey]["team_of_people"];
-        //         // alert(this.dataModel1[dataModelKey]["children"])
-        //         for (let dataKey in this.dataModel1[dataModelKey]) {
-        //             if (dataKey == 'label' || dataKey == 'children') {
-        //                 this.dataModel1[dataModelKey]['children']['label'] = this.dataModel1[dataModelKey]['children']['name'];
-        //                 this.dataModel1[dataModelKey]['children']['children'] = this.dataModel1[dataModelKey]['children']['department'];
-        //             }
-        //             else{
-        //                 // this.dataModel1[dataModelKey]['children'].splice(dataKey, dataKey);
-        //                 this.remove(this.dataModel1[dataModelKey]['children'], dataKey)
-        //             }
-        //         }
-
-
-                    // this.dataModel1[dataModelKey]['children']['children']['label']=this.dataModel1[dataModelKey]['children']['children']['name']
-
-                    // }
-                // if (dataModelKey=)
-
-             // this.dataModel1[0]["label"]=this.dataModel[0]["name"];
-            // return sum;
-        //     return this.dataModel1;
-        // },
         destroy(id) {
             this.$inertia.delete(route("posts.destroy", id));
         },

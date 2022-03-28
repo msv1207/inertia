@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTreeRequest;
 use App\Http\Requests\UpdateTreeRequest;
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\SubCategory;
 use App\Models\Worker;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class TreeController extends Controller
@@ -54,9 +59,19 @@ class TreeController extends Controller
      * @param  \App\Models\Tree  $tree
      * @return \Illuminate\Http\Response
      */
-    public function edit(Worker $worker)
+    public function edit($id)
     {
-        //
+       $post= Post::find($id);
+//       dd($post->category()->get()[0]->title);
+        return Inertia::render('Post/Test', [
+            'post' => [
+                'id' => $post->id,
+                'title' => $post->title,
+                'categoryTitle' => $post->category()->get()[0]->title,
+                'mainCategoryTitle' => $post->category()->get()[0]->sub_category()->get()[0]->title,
+                'description' => $post->description
+            ]
+        ]);
     }
 
     /**
@@ -66,9 +81,45 @@ class TreeController extends Controller
      * @param  \App\Models\Tree  $tree
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTreeRequest $request, Worker $worker)
+    public function update(Request $request, $id)
     {
-        //
+//        Route::put('/test', function (Request $request, Post $post){
+//dd($request->mainCategoryTitle);
+        $post= Post::find($id);
+
+//        $post->c
+        $tet=$post->category()->get()[0];
+        $tet2=$post->category()->get()[0]->sub_category()->get()[0];
+        if($tet2->title==$request->mainCategoryTitle)
+        {
+            $sub_category_id=($post->category()->get()[0]->sub_category()->get()[0]->id);
+
+        }
+        else {
+            $sub_category_id=SubCategory::create(['title' => $request->mainCategoryTitle])->id;
+
+        }
+        if($tet->title==$request->categoryTitle)
+        {}
+        else {
+            $category=Category::query();
+            $tet = $category->create(
+                ['title' => $request->categoryTitle, 'sub_category_id' => $sub_category_id]
+            );
+        }
+//       dd($tt->id);
+//        dd($category->get());
+//            $category = new Category(['title' => $request->categoryTitle]);
+//$category->save();
+
+            Post::create(['title' => $request->title,
+                'description'=> $request->description,
+                'category_id' => $tet->id
+            ])->save();
+            return Redirect::route('posts.index');
+
+
+//        });
     }
 
     /**

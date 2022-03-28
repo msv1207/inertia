@@ -19,16 +19,23 @@
             >
                Edit
             </Link>
+                <Link
+                    class="text-green-700"
+                    :href="route('test.edit', node.id)"
+                >
+                    Create
+                </Link>
             </div>
+
             <TreeBrowser
-                v-if="isExpanded(node) && node.posts"
-                :nodes="node.posts"
+                v-if="isExpanded(node) && node.categories"
+                :nodes="node.categories"
                 :depth="depth + 1"
                 @onClick="(node) => $emit('onClick', node)"
             />
             <TreeBrowser
-                v-if="isExpanded(node) && node.categories"
-                :nodes="node.categories"
+                v-if="isExpanded(node) && node.posts"
+                :nodes="node.posts"
                 :depth="depth + 1"
                 @onClick="(node) => $emit('onClick', node)"
             />

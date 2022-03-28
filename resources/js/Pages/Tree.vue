@@ -11,7 +11,7 @@
 
 <script>
 import TreeBrowser from "@/components/TreeBrowser.vue";
-import rootData from "./root.json";
+// import rootData from "./root.json";
 export default {
     name: "app",
     data() {

@@ -3,7 +3,11 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TreeController;
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\GoogleSocialiteController;
@@ -24,7 +28,6 @@ Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback
 */
 
 Route::get('/', function () {
-    Article::addAllToIndex();
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -40,12 +43,15 @@ Route::get('/dashboard', function () {
 Route::resource('test', TreeController::class);
 
 
-Route::get('/search', function() {
 
-    $articles = Article::searchByQuery(['match' => ['title' => 'dolor']]);
+
+
+Route::post('/search', function(Request $request) {
+    Post::addAllToIndex();
+    $articles = Post::searchByQuery(['match' => ['title' => $request->search]]);
 
     return $articles;
-});
+})->name('search');
 
 Route::resource('posts', PostController::class);
 
