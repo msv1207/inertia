@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TreeController;
 use App\Models\Article;
 use App\Models\Category;
@@ -45,14 +46,9 @@ Route::resource('test', TreeController::class);
 
 
 
-
-Route::post('/search', function(Request $request) {
-    Post::addAllToIndex();
-    $articles = Post::searchByQuery(['match' => ['title' => $request->search]]);
-
-    return $articles;
-})->name('search');
+Route::post('/search', [SearchController::class, 'index'])->name('search');
 
 Route::resource('posts', PostController::class);
+//Route::post('post/edit', PostController::class)
 
 require __DIR__.'/auth.php';

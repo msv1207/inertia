@@ -62,7 +62,6 @@ class TreeController extends Controller
     public function edit($id)
     {
        $post= Post::find($id);
-//       dd($post->category()->get()[0]->title);
         return Inertia::render('Post/Test', [
             'post' => [
                 'id' => $post->id,
@@ -83,11 +82,9 @@ class TreeController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        Route::put('/test', function (Request $request, Post $post){
-//dd($request->mainCategoryTitle);
+
         $post= Post::find($id);
 
-//        $post->c
         $tet=$post->category()->get()[0];
         $tet2=$post->category()->get()[0]->sub_category()->get()[0];
         if($tet2->title==$request->mainCategoryTitle)
@@ -107,19 +104,11 @@ class TreeController extends Controller
                 ['title' => $request->categoryTitle, 'sub_category_id' => $sub_category_id]
             );
         }
-//       dd($tt->id);
-//        dd($category->get());
-//            $category = new Category(['title' => $request->categoryTitle]);
-//$category->save();
-
             Post::create(['title' => $request->title,
                 'description'=> $request->description,
                 'category_id' => $tet->id
             ])->save();
             return Redirect::route('posts.index');
-
-
-//        });
     }
 
     /**

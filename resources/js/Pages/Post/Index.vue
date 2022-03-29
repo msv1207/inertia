@@ -42,13 +42,13 @@
                     </button>
                 </div>
             </form>
+
 <!--            <tree-view  id="my-tree" :initial-model="tree(dataModel)"></tree-view>-->
         </template>
         <div id="app">
             <TreeBrowser
                 :nodes="root"
                 @onClick="nodeWasClicked"
-
             />
         </div>
         <div class="py-12">
@@ -103,11 +103,24 @@
                             </tr>
                             </tbody>
                         </table>
-                        <pagination :links="posts.links" />
+<!--                        <pagination :links="posts.links" />-->
                     </div>
                 </div>
-<!--                {{tree(6)}}-->
-<!--                {{posts.data}}-->
+                <tbody>
+                <tr v-for="post in searchRes" :key="post.id">
+                    <td >{{ post.id }}</td>
+                    <td >{{ post.title }}</td>
+                    <td >{{ post.description }}</td>
+                    <td class="px-4 py-2 font-extrabold">
+                    </td>
+                </tr>
+                </tbody>
+<!--                {{searchRes.description}}-->
+
+                <!--                {{sortedPosts}}-->
+<!--                {{this.posts.sort}}-->
+<!--                {{ posts.data}}-->
+
             </div>
         </div>
     </BreezeAuthenticatedLayout>
@@ -122,7 +135,6 @@ import TreeBrowser from "@/components/TreeBrowser.vue";
 import { Inertia } from '@inertiajs/inertia'
 import { reactive } from 'vue'
 
-// import rootData from "../root.json";
 export default {
 
         setup () {
@@ -148,7 +160,7 @@ export default {
     props: {
         posts: [],
         categories: [],
-        dataModel: []
+        searchRes: []
     },
 
     data(){
@@ -183,12 +195,6 @@ export default {
     },
     methods: {
 
-            // submit() {
-            //     // alert(this.form);
-            //     this.$inertia.post(route("search", search));
-            //
-            //     // this.form.post(route("search"));
-            // },
 
         destroy(id) {
             this.$inertia.delete(route("posts.destroy", id));
