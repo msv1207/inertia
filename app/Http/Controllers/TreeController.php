@@ -41,75 +41,32 @@ class TreeController extends Controller
      * @param  \App\Http\Requests\StoreTreeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTreeRequest $request)
+    public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tree  $tree
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tree  $tree
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-       $post= Post::find($id);
-        return Inertia::render('Post/Test', [
-            'post' => [
-                'id' => $post->id,
-                'title' => $post->title,
-                'categoryTitle' => $post->category()->get()[0]->title,
-                'mainCategoryTitle' => $post->category()->get()[0]->sub_category()->get()[0]->title,
-                'description' => $post->description
-            ]
+        $sub_category_id= SubCategory::firstOrCreate(['title' => $request->mainCategoryTitle])->id;
+        $category_id=Category::firstOrCreate(['title' => $request->categoryTitle, 'sub_category_id' => $sub_category_id])->id;
+        Post::firstOrCreate(['title' => $request->title,
+            'description'=> $request->description,
+            'category_id' => $category_id
         ]);
+
+        return "success";
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateTreeRequest  $request
-     * @param  \App\Models\Tree  $tree
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
 
-        $post= Post::find($id);
-
-        $tet=$post->category()->get()[0];
-        $tet2=$post->category()->get()[0]->sub_category()->get()[0];
-        if($tet2->title==$request->mainCategoryTitle)
-        {
-            $sub_category_id=($post->category()->get()[0]->sub_category()->get()[0]->id);
-
-        }
-        else {
-            $sub_category_id=SubCategory::create(['title' => $request->mainCategoryTitle])->id;
-
-        }
-        if($tet->title==$request->categoryTitle)
-        {}
-        else {
-            $category=Category::query();
-            $tet = $category->create(
-                ['title' => $request->categoryTitle, 'sub_category_id' => $sub_category_id]
-            );
-        }
-            Post::create(['title' => $request->title,
-                'description'=> $request->description,
-                'category_id' => $tet->id
-            ])->save();
-            return Redirect::route('posts.index');
-    }
+//    public function update(Request $request, $id)
+//    {
+//
+//
+//        $sub_category_id= SubCategory::firstOrCreate(['title' => $request->mainCategoryTitle])->id;
+//        $category_id=Category::firstOrCreate(['title' => $request->categoryTitle, 'sub_category_id' => $sub_category_id])->id;
+//        Post::firstOrCreate(['title' => $request->title,
+//                'description'=> $request->description,
+//                'category_id' => $category_id
+//            ]);
+//
+//            return "success";
+//    }
 
     /**
      * Remove the specified resource from storage.

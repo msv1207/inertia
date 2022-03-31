@@ -6,7 +6,7 @@
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Post
             </h2>
-
+<!--{{root[1].title}}-->
             <form @submit.prevent="submit">
                 <div>
                     <label for="search">search</label>
@@ -27,6 +27,7 @@
                                     "
                     />
                 </div>
+
                 <!-- submit -->
                 <div class="flex items-center mt-4">
                     <button
@@ -40,16 +41,25 @@
                     >
                         search
                     </button>
+
                 </div>
+                <ul id="example-1">
+                    <li v-for="item in searchRes" :key="item.title">
+                        {{ item.title }}
+                    </li>
+                </ul>
             </form>
 
 <!--            <tree-view  id="my-tree" :initial-model="tree(dataModel)"></tree-view>-->
         </template>
         <div id="app">
+
             <TreeBrowser
                 :nodes="root"
                 @onClick="nodeWasClicked"
             />
+
+
         </div>
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -134,6 +144,8 @@ import { Link } from "@inertiajs/inertia-vue3";
 import TreeBrowser from "@/components/TreeBrowser.vue";
 import { Inertia } from '@inertiajs/inertia'
 import { reactive } from 'vue'
+import draggable from 'vuedraggable'
+
 
 export default {
 
@@ -156,6 +168,7 @@ export default {
         TreeBrowser,
         BreezeNavLink,
         Link,
+        draggable,
     },
     props: {
         posts: [],
@@ -180,7 +193,7 @@ export default {
     },
     computed:{
         nodeWasClicked(node) {
-            // alert(node.name);
+            console.log(node.name);
         },
         sortedPosts:function() {
             return this.posts.data.sort((a,b) => {

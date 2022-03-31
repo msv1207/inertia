@@ -6,24 +6,36 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\SubCategory;
 use App\Models\Worker;
+use Illuminate\Cache\RedisStore;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 //use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Inertia\Inertia;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        Post::addAllToIndex();
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
 
+
     public function index()
     {
-        Post::addAllToIndex();
+        cache()->remember('categories', 200, function () {
+            return SubCategory::with('categories.posts')->get();
+        });
+        $category=Cache::get('categories');
         $posts = Post::latest()->paginate(20);
-        $category=SubCategory::with('categories.posts')->get();
         return Inertia::render('Post/Index', [
             'posts' => $posts,
             'categories' => $category,
@@ -102,11 +114,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $post->category()->get()[0]
-            ->update(['title' => $request->categoryTitle]);
-        $post->category()->get()[0] ->sub_category()
+        $post->update($request->all())->category()->get()[0]
+            ->update(['title' => $request->categoryTitle])->sub_category()
             ->update(['title' => $request->mainCategoryTitle]);
-        $post->update($request->all());
+//        $post->category()->get()[0] ->sub_category()
+//            ->update(['title' => $request->mainCategoryTitle]);
+//        $post->update($request->all());
 
 
         return Redirect::route('posts.index');

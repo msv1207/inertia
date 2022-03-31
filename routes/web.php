@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\TreeController;
 use App\Models\Article;
 use App\Models\Category;
@@ -47,6 +48,7 @@ Route::resource('test', TreeController::class);
 
 
 Route::post('/search', [SearchController::class, 'index'])->name('search');
+Route::post('/tag/{id}', [TagController::class, 'index'])->name('tag');
 
 Route::resource('posts', PostController::class);
 //Route::post('post/edit', PostController::class)
