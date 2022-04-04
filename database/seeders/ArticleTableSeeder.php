@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Article;
 use Faker\Factory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ArticleTableSeeder extends Seeder
@@ -18,11 +17,11 @@ class ArticleTableSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        for($i=0; $i<50; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             Article::create([
                 'title' => $faker->sentence(3),
                 'body' => $faker->paragraph(6),
-                'tags' => join(',', $faker->words(4))
+                'tags' => implode(',', $faker->words(4)),
             ]);
         }
     }

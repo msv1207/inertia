@@ -11,7 +11,7 @@ class Worker extends Model
         'name',
         'role',
         'birth',
-        'team_of_people_id'
+        'team_of_people_id',
     ];
     use HasFactory;
 

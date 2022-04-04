@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Socialite;
+use App\Models\User;
 use Auth;
 use Exception;
-use App\Models\User;
+use Socialite;
 
 class GoogleSocialiteController extends Controller
 {
@@ -28,31 +28,27 @@ class GoogleSocialiteController extends Controller
     public function handleCallback()
     {
         try {
-
             $user = Socialite::driver('google')->user();
 
             $finduser = User::where('social_id', $user->id)->first();
 
-            if($finduser){
-
+            if ($finduser) {
                 Auth::login($finduser);
 
                 return redirect('/home');
-
-            }else{
+            } else {
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
                     'social_id'=> $user->id,
                     'social_type'=> 'google',
-                    'password' => encrypt('my-google')
+                    'password' => encrypt('my-google'),
                 ]);
 
                 Auth::login($newUser);
 
                 return redirect('/home');
             }
-
         } catch (Exception $e) {
             dd($e->getMessage());
         }

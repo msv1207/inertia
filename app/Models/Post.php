@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 
 class Post extends Model
 {
-
     use ElasticquentTrait, Notifiable;
 
     public function routeNotificationForSlack($notification)
@@ -20,18 +19,19 @@ class Post extends Model
     protected $fillable = [
     'title',
     'description',
-        'category_id'
+        'category_id',
     ];
-    protected ?array $mappingProperties = array(
+    protected ?array $mappingProperties = [
         'title' => [
             'type' => 'text',
-            "analyzer" => "standard",
+            'analyzer' => 'standard',
         ],
         'description' => [
             'type' => 'text',
-            "analyzer" => "standard",
+            'analyzer' => 'standard',
         ],
-    );
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

@@ -9,7 +9,7 @@ class TeamOfPeople extends Model
 {
     protected $fillable = [
         'name',
-        'departments_id'
+        'departments_id',
     ];
     use HasFactory;
 

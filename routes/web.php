@@ -1,19 +1,15 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleSocialiteController;
+use App\Http\Controllers\Plan\PlanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TreeController;
-use App\Models\Article;
-use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\Auth\GoogleSocialiteController;
-
 
 Route::get('auth/google', [GoogleSocialiteController::class, 'redirectToGoogle']);
 Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback']);
@@ -40,12 +36,10 @@ Route::get('/', function () {
 Route::view('/login2', 'auth/login');
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::resource('tree', TreeController::class);
 
-
-
+Route::resource('plans', PlanController::class);
 
 Route::post('/search', [SearchController::class, 'index'])->name('search');
 Route::post('/tag/{id}', [TagController::class, 'index'])->name('tag');
@@ -53,4 +47,4 @@ Route::post('/tag/{id}', [TagController::class, 'index'])->name('tag');
 Route::resource('posts', PostController::class);
 //Route::post('post/edit', PostController::class)
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

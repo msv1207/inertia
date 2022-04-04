@@ -160,12 +160,12 @@
                             </button>
                         </div>
                     </form>
-                <Link
-                    class="text-green-700"
-                    :href="route('test.edit', node.id)"
-                >
-                    Create
-                </Link>
+<!--                <Link-->
+<!--                    class="text-green-700"-->
+<!--                    :href="route('test.edit', node.id)"-->
+<!--                >-->
+<!--                    Create-->
+<!--                </Link>-->
             </div>
 
 
@@ -186,6 +186,7 @@
                 @onClick="(node) => $emit('onClick', node)"
             />
     <div>
+
         <div>
         <button @click="isShow = !isShow"> Create</button>
         </div>

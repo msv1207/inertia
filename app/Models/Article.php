@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use Elasticquent\ElasticquentTrait;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -13,19 +11,18 @@ class Article extends Model
 
     protected $fillable = ['title', 'body', 'tags'];
 
-    protected ?array $mappingProperties = array(
+    protected ?array $mappingProperties = [
         'title' => [
             'type' => 'text',
-            "analyzer" => "standard",
+            'analyzer' => 'standard',
         ],
         'body' => [
             'type' => 'text',
-            "analyzer" => "standard",
+            'analyzer' => 'standard',
         ],
         'tags' => [
             'type' => 'text',
-            "analyzer" => "standard",
+            'analyzer' => 'standard',
         ],
-    );
-
+    ];
 }
