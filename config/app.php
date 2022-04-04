@@ -141,6 +141,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        NotificationChannels\Telegram\TelegramServiceProvider::class,
         Elasticquent\ElasticquentServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,

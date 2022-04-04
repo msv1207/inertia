@@ -42,7 +42,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::resource('test', TreeController::class);
+Route::resource('tree', TreeController::class);
 
 
 

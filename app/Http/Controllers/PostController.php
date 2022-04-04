@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\SubCategory;
 use App\Models\Worker;
+use App\Notifications\SendNotification;
+use App\Notifications\Telegram;
 use Illuminate\Cache\RedisStore;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -31,11 +33,15 @@ class PostController extends Controller
 
     public function index()
     {
+//        $activity = Telegram::;
+//        dd($activity);
         cache()->remember('categories', 200, function () {
             return SubCategory::with('categories.posts')->get();
         });
+
         $category=Cache::get('categories');
         $posts = Post::latest()->paginate(20);
+
         return Inertia::render('Post/Index', [
             'posts' => $posts,
             'categories' => $category,
@@ -64,6 +70,7 @@ class PostController extends Controller
        $cat= $mainCat->categories()->save(Category::create(['title' => $request->categoryTitle]));
           $cat->posts()->save(Post::create(['title' => $request->title,
             'description'=> $request->description]));
+
 
         return Redirect::route('posts.index');
     }

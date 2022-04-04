@@ -21,8 +21,7 @@ class TreeController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Tree');
-
+        //
     }
 
     /**
@@ -54,19 +53,15 @@ class TreeController extends Controller
     }
 
 
-//    public function update(Request $request, $id)
-//    {
-//
-//
-//        $sub_category_id= SubCategory::firstOrCreate(['title' => $request->mainCategoryTitle])->id;
-//        $category_id=Category::firstOrCreate(['title' => $request->categoryTitle, 'sub_category_id' => $sub_category_id])->id;
-//        Post::firstOrCreate(['title' => $request->title,
-//                'description'=> $request->description,
-//                'category_id' => $category_id
-//            ]);
-//
-//            return "success";
-//    }
+    public function update( Request $request)
+    {
+
+        $posts=Post::find($request->id);
+        $posts->category_id=$request->category_id;
+        $posts->save();
+
+        return "success";
+    }
 
     /**
      * Remove the specified resource from storage.

@@ -1,11 +1,10 @@
 <template>
 
 <!--        <template v-for="node in nodes">-->
-    <VueDraggableNext class="dragArea list-group w-full" :group="{  put: true }"   v-for="node in nodes"
-                      :key="node.title"
-                      :style="{'margin-left': `${depth * 20}px`}"
-                      :list="nodes"
-                      @update="log(node)"
+    <VueDraggableNext class="dragArea list-group w-full"
+                      v-model="nodes"
+                      :group="{  name: 'categories', put: true }"
+                      @change="log"
     >
 <!--        v-for="node in nodes" :key="node.title">-->
 <!--        v-model="nodes" item-key="node">-->
@@ -13,7 +12,9 @@
 <!--        <template #item="{node}">-->
 <!--            <div>{{node.title}}</div>-->
 
-                        <div
+                        <div  v-for="node in nodes"
+                              :key="node.title"
+                              :style="{'margin-left': `${depth * 20}px`}"
             >
 <!--        >-->
 
@@ -179,6 +180,7 @@
             <TreeBrowser
                 v-if="isExpanded(node) && node.posts"
                 :category="node.title"
+                :categoryid="node.id"
                 :nodes="node.posts"
                 :depth="depth + 1"
                 @onClick="(node) => $emit('onClick', node)"
@@ -215,6 +217,7 @@ export default {
     props: {
         nodes: Array,
         category: '',
+        categoryid: null,
         mainCategory: '',
         itemKey: null,
         tag: '',
@@ -267,19 +270,16 @@ export default {
     methods: {
         createNewTag(id)
         {
-            // alert(this.form3.id)
             this.form3.post('/tag/'+ id);
 
         },
-        log( id, /**Event*/evt){
-            // alert("cecec")
-            console.log(evt.);
-            // console.log(id)
-            // console.log(evt.newIndex)
+        log(/**Event*/evt){
+            evt.added.element.category_id=this.categoryid;
+            Inertia.put('tree/1', evt.added.element)
 
         },
         createNew() {
-            this.form2.post('/test');
+            this.form2.post('/tree');
         },
         isExpanded(node) {
             return this.expanded.indexOf(node) !== -1;

@@ -14,6 +14,11 @@ return [
     |
     */
 
+    'telegram-bot-api' => [
+        'bot_url' => env('TELEGRAM_BOT_URL'),
+        'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR BOT TOKEN HERE'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
