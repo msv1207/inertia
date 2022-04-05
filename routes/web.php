@@ -10,6 +10,7 @@ use App\Models\Post;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Spatie\GoogleCalendar\Event;
 
 Route::get('auth/google', [GoogleSocialiteController::class, 'redirectToGoogle']);
 Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback']);
@@ -33,6 +34,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
 Route::view('/login2', 'auth/login');
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

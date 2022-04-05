@@ -9,8 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "codeception/module-asserts": "3.0.0",
         "codeception/module-laravel": "dev-codecept5",
+        "codeception/module-phpbrowser": "3.0.0",
         "elasticquent/elasticquent": "dev-master",
+        "google/apiclient": "^2.12",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.5.4",
         "laravel-notification-channels/telegram": "^2.0",
@@ -22,9 +25,7 @@
         "laravel/tinker": "^2.7",
         "predis/predis": "^1.1",
         "spatie/laravel-google-calendar": "^3.5",
-        "tightenco/ziggy": "^1.0",
-        "codeception/module-phpbrowser": "3.0.0",
-        "codeception/module-asserts": "3.0.0"
+        "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

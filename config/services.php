@@ -36,9 +36,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     'google' => [
-        'client_id' => '961270009396-3irtt3qak3skmufjh4nhjlnmtpe4b7ga.apps.googleusercontent.com',
-        'client_secret' => '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',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => 'http://localhost:8002/callback/google',
+        'webhook_uri' => env('GOOGLE_WEBHOOK_URI'),
+        'scopes' => [
+            \Google_Service_Oauth2::USERINFO_EMAIL,
+            \Google_Service_Calendar::CALENDAR,
+        ],
+        'approval_prompt' => 'force',
+        'access_type' => 'offline',
+        'include_granted_scopes' => true,
     ],
 
 ];
