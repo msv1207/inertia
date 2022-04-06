@@ -94,12 +94,6 @@
                         </Link>
                         <br>
                         <Link
-                            class="text-green-700"
-                            :href="route('plans.show', plan.id)"
-                        >
-                            Show
-                        </Link>
-                        <Link
                             @click="destroy(plan.id)"
                             class="text-red-700"
                         >Delete</Link>
