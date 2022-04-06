@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Plan;
 
 use App\Http\Controllers\Controller;
-use App\Models\Plans;
+use App\Services\StrInTime;
+use App\Models\Plan;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
@@ -14,16 +16,10 @@ class PlanController extends Controller
 {
     public function index()
     {
-//        $m= Carbon::now();
-//        dd($m);
-        $plans = Plans::latest()->paginate(20);
-//        Event::create([
-//            'name' => 'A new event',
-//            'startDateTime' => Carbon\Carbon::now(),
-//            'endDateTime' => Carbon\Carbon::now()->addHour(),
-//        ]);
-//        dd( Event::get());
-//        $plans=Plans::all();
+
+        $plans = Plan::all();
+
+
         return Inertia::render('Plan/Index', [
             'plans' => $plans,
         ]);
@@ -32,24 +28,51 @@ class PlanController extends Controller
 
     public function store(Request $request)
     {
-// dump($request);
-//        protected $fillable = ['google_id', 'name', 'description', 'allday', 'started_at', 'ended_at'];
-//dd($request->all());
-$test= DateTime::createFromImmutable('Y-m-d h:i:s', strtotime($request[0]));
-//        Event::create([
-//            'name' => 'A new event',
-//            'startDateTime' => date('Y-m-d h:i:s',strtotime($request[0])),
-//            'endDateTime' => date('Y-m-d h:i:s',strtotime($request[1])),
-//        ]);
-        Plans::create([
-                'name'=>'ds',
-            'description' => 'ewf',
-            'started_at'=>date('Y-m-d h:i:s', $test),
-            'ended_at'=>date('Y-m-d h:i:s',strtotime($request[1]))
+
+        $date=StrInTime::strToDate($request->calendar);
+
+        Plan::create([
+                'name'=>$request->title,
+            'description' => $request->description,
+            'started_at'=> $date['date1'],
+            'ended_at'=> $date['date2']
+        ]);
+        return $this->index();
+
+    }
+
+    public function edit(Plan $plan)
+    {
+//        dd($plan->id);
+        return Inertia::render('Plan/Edit', [
+            'plan' => $plan->id,
+
         ]);
     }
 
-    public function update(Plans $plan, Request $request)
+    public function update(Plan $plan, Request $request)
     {
+//        dd($request->all());
+        $date=StrInTime::strToDate($request->calendar);
+//dd($date);
+        $plan->update([
+            'name' => $request->title,
+            'description'=>$request->description,
+            'started_at'=>$date['date1'],
+            'ended_at'=>$date['date2']
+        ]);
+//        $post->category()->get()[0] ->sub_category()
+//            ->update(['title' => $request->mainCategoryTitle]);
+//        $post->update($request->all());
+
+        return $this->index();
+    }
+
+    public function destroy(Plan $plan)
+    {
+
+        $plan->delete();
+
+        return $this->index();
     }
 }

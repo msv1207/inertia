@@ -18,6 +18,6 @@ class GoogleAccount extends Model
 
     public function calendars()
     {
-        return $this->hasMany(Plans::class);
+        return $this->hasMany(Plan::class);
     }
 }

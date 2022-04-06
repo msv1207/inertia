@@ -119,7 +119,7 @@ class PostController extends Controller
 //            ->update(['title' => $request->mainCategoryTitle]);
 //        $post->update($request->all());
 
-        return Redirect::route('posts.index');
+        return $this->index();
     }
 
     /**

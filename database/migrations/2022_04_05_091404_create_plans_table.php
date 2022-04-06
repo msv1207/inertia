@@ -22,14 +22,17 @@ return new class extends Migration {
                 ->onDelete('cascade');
 
             // Data.
-            $table->string('google_id')->nullable();
+            $table->string('event_id')->nullable();
+
+            $table->bigInteger('google_id')->nullable();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->boolean('allday')->default(false);
 
             // Timestamps.
-            $table->date('started_at');
-            $table->date('ended_at');
+//            $table->date('started_at');
+            $table->timestamp('started_at');
+            $table->timestamp('ended_at');
             $table->timestamps();
         });
     }

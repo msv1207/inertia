@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Plans;
+use App\Models\Plan;
 
 class SendNotification extends Controller
 {
     public function index()
     {
-        $notify = Plans::find(1);
+        $notify = Plan::find(1);
         $notify->notify(new \App\Notifications\SendNotification('njnjn'));
     }
 }

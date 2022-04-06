@@ -7,19 +7,107 @@
                 plan
             </h2>
             <!--{{root[1].title}}-->
-            <form>
-            <div id="app">
-                <date-picker
-                    language="fr"
-                    :dateInput="dateInput"
-                    apply-button-label="use"
-                    :show-helper-buttons="true"
-                    :switch-button-initial="true"
-                    :is-monday-first="true"
-                    @date-applied="selectDate"
+            <form @submit.prevent="submit()">
+                <div>
+                    <label for="title">title</label>
+                    <input
+                        v-model="form.title"
+                        type="text"
+                        id="title"
+                        class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
                     />
-            </div>
+                </div>
+                <div>
+                    <label for="description">description</label>
+                    <input
+                        v-model="form.description"
+                        type="text"
+                        id="description"
+                        class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                    />
+                </div>
+                <div id="app">
+                    <date-picker
+                        language="fr"
+                        :dateInput="dateInput"
+                        :show-helper-buttons="true"
+                        :switch-button-initial="true"
+                        :is-monday-first="true"
+                        @date-applied="selectDate"
+                    />
+                </div>
+
+                <!-- submit -->
+                <div class="flex items-center mt-4">
+                    <button
+                        class="
+                                        px-6
+                                        py-2
+                                        text-white
+                                        bg-gray-900
+                                        rounded
+                                    "
+                    >
+                        send
+                    </button>
+                </div>
             </form>
+            <table>
+                <thead class="font-bold bg-gray-300 border-b-2">
+                <tr>
+                    <th class="px-4 py-2">Id</th>
+                    <th class="px-4 py-2">Title</th>
+                    <th class="px-4 py-2">Description</th>
+                    <th class="px-4 py-2">Time</th>
+                    <th class="px-4 py-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="plan in plans" :key="plan.id">
+                    <td >{{ plan.id }}</td>
+                    <td >{{ plan.name }}</td>
+                    <td >{{ plan.description }}</td>
+                    <td >From {{ plan.started_at}} to {{ plan.ended_at}}</td>
+                    <td class="px-4 py-2 font-extrabold">
+                        <Link class="text-green-700" :href="route('plans.edit', plan.id)">
+                            Edit
+                        </Link>
+                        <br>
+                        <Link
+                            class="text-green-700"
+                            :href="route('plans.show', plan.id)"
+                        >
+                            Show
+                        </Link>
+                        <Link
+                            @click="destroy(plan.id)"
+                            class="text-red-700"
+                        >Delete</Link>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+
         </template>
 
     </BreezeAuthenticatedLayout>
@@ -47,16 +135,18 @@ class Event {
 export default {
 
     setup () {
-        // const form = reactive({
-        //     search: null,
-        //
-        // })
+        const form = reactive({
+            title: null,
+            calendar:null,
+            description:null
+
+        })
         //
         // function submit() {
-        //     Inertia.plan('/search', form)
+        //     Inertia.post('/plans', form)
         // }
         //
-        // return { form, submit }
+        return { form }
     },
     name: "app",
     components: {
@@ -106,6 +196,9 @@ export default {
         // }
     },
     methods: {
+        submit() {
+            this.form.put(route("posts.update", this.post.id));
+        },
         selectDate(date1, date2)
 {
     let arr=[]
@@ -119,9 +212,9 @@ export default {
     //     new Event('select-date', `${date1.toString()} - ${date2.toString()}`),
     // );
     // Inertia.post('/plans', z)
-    arr.push(date1, date1);
-
-    Inertia.post('/plans', arr)
+    arr.push(date1, date2);
+    this.form.calendar=arr;
+    // Inertia.post('/plans', arr)
 },
 
         destroy(id) {
