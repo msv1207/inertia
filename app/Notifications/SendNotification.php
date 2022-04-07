@@ -41,7 +41,7 @@ class SendNotification extends Notification
     public function toSlack($notifiable)
     {
         return (new SlackMessage)
-            ->content('test');
+            ->content('Created new plan');
     }
 
     /**

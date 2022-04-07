@@ -4,7 +4,7 @@
     <BreezeAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                plan
+                Plan
             </h2>
             <!--{{root[1].title}}-->
             <form @submit.prevent="submit()">
@@ -93,6 +93,7 @@
                             Edit
                         </Link>
                         <br>
+
                         <Link
                             @click="destroy(plan.id)"
                             class="text-red-700"
@@ -191,7 +192,7 @@ export default {
     },
     methods: {
         submit() {
-            this.form.put(route("posts.update", this.post.id));
+            Inertia.post('/plans', this.form)
         },
         selectDate(date1, date2)
 {

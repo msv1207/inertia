@@ -22,7 +22,7 @@ return new class extends Migration {
                 ->onDelete('cascade');
 
             // Data.
-            $table->string('event_id')->nullable();
+            $table->string('event_id')->nullable()->unique();
 
             $table->bigInteger('google_id')->nullable();
             $table->string('name')->nullable();

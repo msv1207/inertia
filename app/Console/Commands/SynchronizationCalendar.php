@@ -31,20 +31,41 @@ class SynchronizationCalendar extends Command
     {
 
        $events= Event::get();
-
+        $plans=[];
+        $i=0;
        foreach ($events as $event) {
-           Plan::updateOrCreate(
-               ['name' => $event->name,
-                   'description'=>$event->description,
-                   'started_at'=>$event->startDateTime,
-                   'ended_at'=>$event->endDateTime
-               ],
-               [    'name' => $event->name,
-                   'description'=>$event->description,
-                   'started_at'=>$event->startDateTime,
-                   'ended_at'=>$event->endDateTime
-               ]
-           );
+           $plans[$i]['event_id']=$event->id;
+           $plans[$i]['name']=$event->name;
+           $plans[$i]['description']=$event->description;
+           $plans[$i]['started_at']=$event->startDateTime->toDateTimeString();
+           $plans[$i]['ended_at']=$event->endDateTime->toDateTimeString();
+
+           $i++;
        }
+//       dd(json_encode( $plans));
+//        $events=array($events);
+//        var_dump($events);
+//        die();
+//        dd( $plans[5]['ended_at']->toDateTimeString());
+           Plan::upsert(
+              $plans,
+               [
+                   'event_id',
+                   'name',
+                   'description',
+                   'started_at',
+                   'ended_at'
+
+               ],
+               [
+                   'event_id',
+                   'name',
+                   'description',
+                   'started_at',
+                   'ended_at'
+               ]
+
+           );
+
     }
 }
