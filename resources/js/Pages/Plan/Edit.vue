@@ -78,15 +78,9 @@
                             </div>
                             <br>
                             <br>
-{{plan}}
                             <br>
                             <br>
                             <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-
                             <br>
                             <br>
                             <br>

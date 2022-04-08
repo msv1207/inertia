@@ -12,13 +12,14 @@ class Category extends Model
     ];
     use HasFactory;
 
+    public function sub_category()
+    {
+        return $this->belongsTo(SubCategory::class);
+    }
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
-    public function sub_category()
-    {
-        return $this->belongsTo(SubCategory::class);
-    }
+
 }

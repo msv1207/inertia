@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\GoogleSocialiteController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Plan\PlanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
@@ -40,6 +41,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::resource('tree', TreeController::class);
+
+Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('bd.pdf');
+
 
 Route::resource('plans', PlanController::class);
 

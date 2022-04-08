@@ -8,9 +8,15 @@ use Illuminate\Notifications\Notifiable;
 
 class Plan extends Model
 {
+    use HasFactory, Notifiable;
+
     protected $with = ['calendar'];
     protected $fillable = ['google_id', 'name', 'description', 'allday', 'started_at', 'ended_at', 'event_id'];
 
+    public function routeNotificationForSlack($notification)
+    {
+        return 'https://hooks.slack.com/services/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';
+    }
     public function calendar()
     {
         return $this->belongsTo(Calendar::class);
@@ -30,5 +36,4 @@ class Plan extends Model
     {
         return $this->started_at->diffForHumans($this->ended_at, true);
     }
-    use HasFactory, Notifiable;
 }

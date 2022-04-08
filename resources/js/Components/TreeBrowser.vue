@@ -11,25 +11,26 @@
 <!--        {{nodes.title}}-->
 <!--        <template #item="{node}">-->
 <!--            <div>{{node.title}}</div>-->
-
                         <div  v-for="node in nodes"
                               :key="node.title"
                               :style="{'margin-left': `${depth * 20}px`}"
             >
 <!--        >-->
-
-    <h5
+    <p
           @click="nodeClicked(node)"
-      >{{isExpanded(node) ? '&#8226 ' : ''}}{{node.title}}</h5>
+      >{{isExpanded(node) ? '&#8226 ' : ''}}{{node.title}}</p>
 <!--            <h5 > {{node.title}}</h5>-->
-            <div :style="{'margin-left': `${depth * 20}px`}">
+
+
+                            <div :style="{'margin-left': `${depth * 20}px`}">
             <Link
-                class="text-green-700"
+                              class=  "text-green-700"
                 :href="route('posts.edit', node.id)"
             >
                Edit
             </Link>
-</div>
+                                <p @click="isOpen = !isOpen"> new tag</p>
+
             <div v-if="isOpen">
                     <form @submit.prevent="createNewTag(node.id)">
                         <div>
@@ -68,107 +69,17 @@
 
                 </form>
             </div>
+</div>
 
-            <div v-if="isShow">
-                    <form @submit.prevent="createNew()">
-                        <div>
-                            <label for="title">Title category</label>
-                            <input
-                                type="text"
-                                v-model="form2.categoryTitle"
-                                class="
-                                                    w-full
-                                                    px-4
-                                                    py-2
-                                                    mt-2
-                                                    border
-                                                    rounded-md
-                                                    focus:outline-none
-                                                    focus:ring-1
-                                                    focus:ring-blue-600
-                                                "
-                            />
-                        </div>
-                        <div>
-                            <label for="title">Title main category</label>
-                            <input
-                                type="text"
-                                v-model="form2.mainCategoryTitle"
-                                class="
-                                                    w-full
-                                                    px-4
-                                                    py-2
-                                                    mt-2
-                                                    border
-                                                    rounded-md
-                                                    focus:outline-none
-                                                    focus:ring-1
-                                                    focus:ring-blue-600
-                                                "
-                            />
-                        </div>
-                        <div>
-                            <label for="title">Title</label>
-                            <input
-                                type="text"
-                                v-model="form2.title"
-                                class="
-                                                    w-full
-                                                    px-4
-                                                    py-2
-                                                    mt-2
-                                                    border
-                                                    rounded-md
-                                                    focus:outline-none
-                                                    focus:ring-1
-                                                    focus:ring-blue-600
-                                                "
-                            />
-                        </div>
-                        <div>
-                            <label for="title">Description</label>
-                            <textarea
-                                type="text"
-                                v-model="form2.description"
-                                class="
-                                                    w-full
-                                                    px-4
-                                                    py-2
-                                                    mt-2
-                                                    border
-                                                    rounded-md
-                                                    focus:outline-none
-                                                    focus:ring-1
-                                                    focus:ring-blue-600
-                                                "
-                            >
-                                            </textarea>
-                        </div>
 
-                        <!-- submit -->
-                        <div class="flex items-center mt-4">
-                            <button
-                                class="
-                                                    px-6
-                                                    py-2
-                                                    text-white
-                                                    bg-gray-900
-                                                    rounded
-                                                "
-                            >
-                                Save
-                            </button>
-                        </div>
-                    </form>
-<!--                <Link-->
+
+
+                                <!--                <Link-->
 <!--                    class="text-green-700"-->
 <!--                    :href="route('test.edit', node.id)"-->
 <!--                >-->
 <!--                    Create-->
 <!--                </Link>-->
-            </div>
-
-
 
     <TreeBrowser
                 v-if="isExpanded(node) && node.categories"
@@ -185,19 +96,17 @@
                 :depth="depth + 1"
                 @onClick="(node) => $emit('onClick', node)"
             />
-    <div>
 
-        <div>
-        <button @click="isShow = !isShow"> Create</button>
-        </div>
-        <div>
-        <button @click="isOpen = !isOpen"> new tag</button>
-        </div>
     </div>
-    </div>
-<!--        </template>-->
+        <!--        </template>-->
 
     </VueDraggableNext>
+    <div>
+
+
+
+    </div>
+
 
 </template>
 

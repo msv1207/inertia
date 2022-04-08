@@ -29,7 +29,6 @@
                 </div>
 
                 <!-- submit -->
-                <div class="flex items-center mt-4">
                     <button
                         class="
                                         px-6
@@ -42,22 +41,17 @@
                         search
                     </button>
 
-                </div>
                 <ul id="example-1">
                     <li v-for="item in searchRes" :key="item.title">
                         {{ item.title }}
                     </li>
                 </ul>
             </form>
-
 <!--            <tree-view  id="my-tree" :initial-model="tree(dataModel)"></tree-view>-->
         </template>
         <div id="app">
 
-            <TreeBrowser
-                :nodes="root"
-                @onClick="nodeWasClicked"
-            />
+
 
 
         </div>
@@ -66,20 +60,134 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="mb-4">
-                            <Link
-                                class="
-                                    px-6
-                                    py-2
-                                    mb-2
-                                    text-green-100
-                                    bg-green-500
-                                    rounded
-                                "
-                                :href="route('posts.create')"
-                            >
-                                Posts Create
-                            </Link>
+                        <div :style="  {  'float' : 'left',  'width': '600px'} ">
+                            <TreeBrowser
+                                :nodes="root"
+                                @onClick="nodeWasClicked"
+                            />
                         </div>
+                        <div v-if="isOpen" :style="  {  'float' : 'right'} ">
+
+                        <form @submit.prevent="createNew()">
+<div>
+                            <label for="title">Title category</label>
+                            <input
+                                type="text"
+                                v-model="form2.categoryTitle"
+                                class="
+                                                    w-full
+                                                    px-4
+                                                    py-2
+                                                    mt-2
+                                                    border
+                                                    rounded-md
+                                                    focus:outline-none
+                                                    focus:ring-1
+                                                    focus:ring-blue-600
+                                                "
+                            />
+                        </div>
+                        <div>
+                            <label for="title">Title main category</label>
+                            <input
+                                type="text"
+                                v-model="form2.mainCategoryTitle"
+                                class="
+                                                    w-full
+                                                    px-4
+                                                    py-2
+                                                    mt-2
+                                                    border
+                                                    rounded-md
+                                                    focus:outline-none
+                                                    focus:ring-1
+                                                    focus:ring-blue-600
+                                                "
+                            />
+                        </div>
+                        <div>
+                            <label for="title">Title</label>
+                            <input
+                                type="text"
+                                v-model="form2.title"
+                                class="
+                                                    w-full
+                                                    px-4
+                                                    py-2
+                                                    mt-2
+                                                    border
+                                                    rounded-md
+                                                    focus:outline-none
+                                                    focus:ring-1
+                                                    focus:ring-blue-600
+                                                "
+                            />
+                        </div>
+                        <div>
+                            <label for="title">Description</label>
+                            <textarea
+                                type="text"
+                                v-model="form2.description"
+                                class="
+                                                    w-full
+                                                    px-4
+                                                    py-2
+                                                    mt-2
+                                                    border
+                                                    rounded-md
+                                                    focus:outline-none
+                                                    focus:ring-1
+                                                    focus:ring-blue-600
+                                                "
+                            >
+                                            </textarea>
+                        </div>
+
+                        <!-- submit -->
+                        <div class="flex items-center mt-4">
+                            <button
+                                class="
+                                                    px-6
+                                                    py-2
+                                                    text-white
+                                                    bg-gray-900
+                                                    rounded
+                                                "
+                            >
+                                Save
+                            </button>
+                        </div>
+                            </form>
+</div>
+
+
+
+
+
+                    </div>
+                        <div :style="  {  'float' : 'left',  'width': '1000px', 'margin-right': '110'} ">
+                            <div>
+                                <div>
+                                    <p  class="text-green-700" @click="isShow = !isShow"> Create</p>
+                                </div>
+<!--                            <Link-->
+<!--                                class="-->
+<!--                                    px-6-->
+<!--                                    py-2-->
+<!--                                    mb-2-->
+<!--                                    text-green-100-->
+<!--                                    bg-green-500-->
+<!--                                    rounded-->
+<!--                                "-->
+<!--                                :href="route('posts.create')"-->
+<!--                            >-->
+<!--                                Posts Create-->
+<!--                            </Link>-->
+                            </div>
+                        </div>
+                    <br>
+                    <br>
+                            <div :style="  {  'float' : 'left',  'width': '600px', 'margin-right':' 200px'} " >
                         <table>
                             <thead class="font-bold bg-gray-300 border-b-2">
                             <tr>
@@ -129,10 +237,11 @@
 
                 <!--                {{sortedPosts}}-->
 <!--                {{this.posts.sort}}-->
-<!--                {{ posts.data}}-->
+                    </div>
 
             </div>
         </div>
+
     </BreezeAuthenticatedLayout>
 </template>
 
@@ -179,8 +288,13 @@ export default {
     data(){
         return {
             root: this.categories,
-            search: ''
-            // root: this.posts,
+            search: '',
+            form2 : this.$inertia.form({
+                mainCategoryTitle: null,
+                categoryTitle: null,
+                title: null,
+                description: null,
+            }),
         }
     },
     watch: {
@@ -208,7 +322,9 @@ export default {
     },
     methods: {
 
-
+        createNew() {
+            this.form2.post('/tree');
+        },
         destroy(id) {
             this.$inertia.delete(route("posts.destroy", id));
         },

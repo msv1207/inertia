@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Post extends Model
 {
-    use ElasticquentTrait, Notifiable;
+    use ElasticquentTrait;
 
     public function routeNotificationForSlack($notification)
     {

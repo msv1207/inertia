@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Plan;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Notifications\SendNotification;
+use App\Notifications\SendCreateNotification;
 use App\Services\StrInTime;
 use App\Models\Plan;
 use DateTime;
@@ -43,14 +43,7 @@ class PlanController extends Controller
             'started_at'=> $date['date1'],
             'ended_at'=> $date['date2']
         ]);
-        $notify = $request;
-        $user= new User();
-        $user->notify(new SendNotification($notify));
 
-//        Notification::send(, new SendNotification($notify));
-
-//        $notify->notify(new \App\Notifications\SendNotification('user'));
-//        $notify->
         return $this->index();
 
     }

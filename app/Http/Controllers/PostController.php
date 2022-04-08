@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostCreateRequest;
 use App\Models\Category;
+use App\Models\Plan;
 use App\Models\Post;
 use App\Models\SubCategory;
-use App\Notifications\Telegram;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 //use Illuminate\Support\Facades\Request;
@@ -17,7 +18,8 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        Post::addAllToIndex();
+Tag::reindex();
+        Post::reindex();
     }
 
     /**
@@ -27,20 +29,20 @@ class PostController extends Controller
      */
     public function index()
     {
-//        $activity = Telegram::;
-//        dd($activity);
-        cache()->remember('categories', 200, function () {
-            return SubCategory::with('categories.posts')->get();
+
+        cache()->remember('posts', 200, function () {
+            return Post::latest()->paginate(200);
         });
 
-        $category = Cache::get('categories');
-        $posts = Post::latest()->paginate(20);
+        $category =SubCategory::with('categories.posts')->get();
+        $posts = Cache::get('posts');
 
         return Inertia::render('Post/Index', [
             'posts' => $posts,
             'categories' => $category,
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -64,7 +66,6 @@ class PostController extends Controller
         $cat = $mainCat->categories()->save(Category::create(['title' => $request->categoryTitle]));
         $cat->posts()->save(Post::create(['title' => $request->title,
             'description'=> $request->description, ]));
-
         return Redirect::route('posts.index');
     }
 
@@ -112,12 +113,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $post->update($request->all())->category()->get()[0]
-            ->update(['title' => $request->categoryTitle])->sub_category()
-            ->update(['title' => $request->mainCategoryTitle]);
-//        $post->category()->get()[0] ->sub_category()
-//            ->update(['title' => $request->mainCategoryTitle]);
-//        $post->update($request->all());
+       $post
+           ->update(['title' => $request->title, 'description'=>$request->description]);
+       $post->category
+           ->update(['title' => $request->categoryTitle]);
+        $post->category->sub_category
+            ->update([['title' => $request->mainCategoryTitle]]);
 
         return $this->index();
     }

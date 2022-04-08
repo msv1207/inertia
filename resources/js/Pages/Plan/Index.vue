@@ -7,6 +7,8 @@
                 Plan
             </h2>
             <!--{{root[1].title}}-->
+            <div :style="{'float': 'right', 'margin-right': '0'}">
+                <H1>Create new </H1>
             <form @submit.prevent="submit()">
                 <div>
                     <label for="title">title</label>
@@ -68,10 +70,24 @@
                                         rounded
                                     "
                     >
-                        send
+                        Send
                     </button>
                 </div>
             </form>
+                </div>
+
+            <br>
+
+            <div>
+            <a class="px-6
+                                    py-2
+                                    mb-2
+                                    text-green-100
+                                    bg-green-500
+                                    rounded" v-bind:href="'/generate-pdf'"> Pdf generete</a>
+</div>
+            <br>
+
             <table>
                 <thead class="font-bold bg-gray-300 border-b-2">
                 <tr>
@@ -211,6 +227,7 @@ export default {
     this.form.calendar=arr;
     // Inertia.post('/plans', arr)
 },
+
 
         destroy(id) {
             this.$inertia.delete(route("plans.destroy", id));
