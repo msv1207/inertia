@@ -6,7 +6,6 @@
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Plan
             </h2>
-            <!--{{root[1].title}}-->
             <div :style="{'float': 'right', 'margin-right': '300', 'width': '600px'}">
                 <H1>Create new </H1>
                 <div>
@@ -137,6 +136,22 @@ import { reactive } from 'vue'
 import draggable from 'vuedraggable'
 import DatePicker, { CalendarDialog } from 'vue-time-date-range-picker/dist/vdprDatePicker'
 import 'vue-time-date-range-picker/dist/vdprDatePicker.min.css'
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+
+const firebaseConfig = {
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESENGER_SENDING_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.MEASUREMENT_ID
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 class Event {
     constructor(name, value) {
         this.name = name;
@@ -151,14 +166,11 @@ export default {
         const form = reactive({
             title: null,
             calendar:null,
-            description:null
+            description:null,
+            token: app.options.apiKey
 
         })
-        //
-        // function submit() {
-        //     Inertia.post('/plans', form)
-        // }
-        //
+
         return { form }
     },
     name: "app",
@@ -194,19 +206,6 @@ export default {
         },
     },
     computed:{
-        // nodeWasClicked(node) {
-        //     console.log(node.name);
-        // },
-        // sortedplans:function() {
-        //     return this.plans.data.sort((a,b) => {
-        //         let modifier = 1;
-        //         if(this.currentSortDir === 'desc') modifier = -1;
-        //         if(this.currentSortDir === 'asc') modifier = +1;
-        //         if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-        //         if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-        //         return 0;
-        //     });
-        // }
     },
     methods: {
         submit() {
@@ -215,19 +214,9 @@ export default {
         selectDate(date1, date2)
 {
     let arr=[]
-    // // console.log(req)
-    // this.events.push(
-    //     new Event('select-date', `${date1.toString()} - ${date2.toString()}`),
-    // );
-    // Inertia.post('/plans', date1
-    // )
-    // this.events.push(
-    //     new Event('select-date', `${date1.toString()} - ${date2.toString()}`),
-    // );
-    // Inertia.post('/plans', z)
+
     arr.push(date1, date2);
     this.form.calendar=arr;
-    // Inertia.post('/plans', arr)
 },
 
 

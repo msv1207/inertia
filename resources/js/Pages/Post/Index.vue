@@ -6,7 +6,6 @@
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Post
             </h2>
-<!--{{root[1].title}}-->
             <form @submit.prevent="submit">
                 <div>
                     <label for="search">search</label>
@@ -28,7 +27,7 @@
                     />
                 </div>
 
-                <!-- submit -->
+                <br>
 <div>
                     <button
                         class="
@@ -49,7 +48,6 @@
                     </li>
                 </ul>
             </form>
-<!--            <tree-view  id="my-tree" :initial-model="tree(dataModel)"></tree-view>-->
         </template>
         <div id="app">
 
@@ -60,7 +58,7 @@
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
+                    <div class="p-6 bg-white">
                         <div class="mb-4">
 
                             <div  :style="  {  'float' : 'left',  'width': '600px'} ">
@@ -71,7 +69,6 @@
                              </div>
 <div id="My">
                         <div  :style="  {  'float' : 'right'} " >
-<!--                            <div  :style="  {  'float' : 'right'} " v-show="visible">-->
 
                         <form @submit.prevent="createNew()">
 <div>
@@ -171,25 +168,8 @@
 
 
                     </div>
-                        <div :style="  {  'float' : 'left',  'width': '1000px', 'margin-right': '110'} ">
-                            <div>
-<!--                            <Link-->
-<!--                                class="-->
-<!--                                    px-6-->
-<!--                                    py-2-->
-<!--                                    mb-2-->
-<!--                                    text-green-100-->
-<!--                                    bg-green-500-->
-<!--                                    rounded-->
-<!--                                "-->
-<!--                                :href="route('posts.create')"-->
-<!--                            >-->
-<!--                                Posts Create-->
-<!--                            </Link>-->
-                            </div>
-                        </div>
-                    <br>
-                    <br>
+
+
                             <div :style="  {  'float' : 'left',  'width': '600px', 'margin-right':' 200px'} " >
                         <table>
                             <thead class="font-bold bg-gray-300 border-b-2">
@@ -224,7 +204,6 @@
                             </tr>
                             </tbody>
                         </table>
-<!--                        <pagination :links="posts.links" />-->
                     </div>
                 </div>
                 <tbody>
@@ -236,10 +215,7 @@
                     </td>
                 </tr>
                 </tbody>
-<!--                {{searchRes.description}}-->
 
-                <!--                {{sortedPosts}}-->
-<!--                {{this.posts.sort}}-->
                     </div>
 
             </div>
@@ -259,7 +235,9 @@ import { reactive } from 'vue'
 import draggable from 'vuedraggable'
 
 
+
 export default {
+
 
         setup () {
             const form = reactive({
@@ -324,11 +302,8 @@ export default {
             });
         }
     },
+
     methods: {
-test()
-{
-    alert('dcdcd')
-},
         createNew() {
             this.form2.post('/tree');
         },

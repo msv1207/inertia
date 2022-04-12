@@ -114,12 +114,8 @@ export default {
             description:null
 
         })
-        //
-        function submit() {
-            // Inertia.put('plans'+ this.plan, this.form)
-            // this.form.put('', this.plan));
-        }
-        //
+
+
         return { form }
     },
     name: "app",
@@ -143,19 +139,9 @@ export default {
         selectDate(date1, date2)
         {
             let arr=[]
-            // // console.log(req)
-            // this.events.push(
-            //     new Event('select-date', `${date1.toString()} - ${date2.toString()}`),
-            // );
-            // Inertia.post('/plans', date1
-            // )
-            // this.events.push(
-            //     new Event('select-date', `${date1.toString()} - ${date2.toString()}`),
-            // );
-            // Inertia.post('/plans', z)
+
             arr.push(date1, date2);
             this.form.calendar=arr;
-            // Inertia.post('/plans', arr)
         },
         submit() {
             Inertia.put('/plans/'+ this.plan, this.form)

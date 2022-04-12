@@ -1,35 +1,27 @@
 <template>
 
-<!--        <template v-for="node in nodes">-->
     <VueDraggableNext class="dragArea list-group w-full"
                       v-model="nodes"
                       :group="{  name: 'categories', put: true }"
                       @change="log"
     >
-<!--        v-for="node in nodes" :key="node.title">-->
-<!--        v-model="nodes" item-key="node">-->
-<!--        {{nodes.title}}-->
-<!--        <template #item="{node}">-->
-<!--            <div>{{node.title}}</div>-->
+
                         <div  v-for="node in nodes"
                               :key="node.title"
                               :style="{'margin-left': `${depth * 20}px`}"
             >
-<!--        >-->
     <p
           @click="nodeClicked(node)"
       >{{isExpanded(node) ? '&#8226 ' : ''}}{{node.title}}</p>
-<!--            <h5 > {{node.title}}</h5>-->
 
-
-                            <div :style="{'margin-left': `${depth * 20}px`}">
+<div v-if="node.description">
             <Link
-                              class=  "text-green-700"
+                              class=  "text-black"
                 :href="route('posts.edit', node.id)"
             >
                Edit
             </Link>
-                                <p @click="isOpen = !isOpen"> new tag</p>
+                                <p class="active:bg-gray-100" @click="isOpen = !isOpen"> new tag</p>
 
             <div v-if="isOpen">
                     <form @submit.prevent="createNewTag(node.id)">
@@ -73,14 +65,6 @@
 
 
 
-
-                                <!--                <Link-->
-<!--                    class="text-green-700"-->
-<!--                    :href="route('test.edit', node.id)"-->
-<!--                >-->
-<!--                    Create-->
-<!--                </Link>-->
-
     <TreeBrowser
                 v-if="isExpanded(node) && node.categories"
                 :mainCategory="node.title"
@@ -98,7 +82,6 @@
             />
 
     </div>
-        <!--        </template>-->
 
     </VueDraggableNext>
     <div>
@@ -196,7 +179,6 @@ export default {
         },
         nodeClicked(node) {
             if (!this.isExpanded(node)) {
-                // alert();
                 this.expanded.push(node);
             } else {
                 this.expanded.splice(this.expanded.indexOf(node));
@@ -210,12 +192,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.node {
-    text-align: left;
-    font-size: 18px;
-}
-.type {
-    margin-right: 10px;
-}
-</style>
+

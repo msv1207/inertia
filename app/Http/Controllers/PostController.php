@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostCreateRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\SubCategory;
@@ -10,7 +9,6 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 //use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -57,14 +55,14 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostCreateRequest $request)
+    public function store(Request $request)
     {
         $mainCat = SubCategory::create(['title' => $request->mainCategoryTittle]);
         $cat = $mainCat->categories()->save(Category::create(['title' => $request->categoryTitle]));
         $cat->posts()->save(Post::create(['title' => $request->title,
             'description'=> $request->description, ]));
 
-        return Redirect::route('posts.index');
+        return $this->index();
     }
 
     /**

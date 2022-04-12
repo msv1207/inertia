@@ -24,8 +24,8 @@ class UpdateTreeRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|max:255',
-            'category_id' => 'required|max:255',
+            'id' => 'required|integer|max:255',
+            'category_id' => 'required|integer|max:255',
         ];
     }
 }

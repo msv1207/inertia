@@ -14,3 +14,4 @@ yarn-error.log
 /.vscode
 /docker/
 /ngrok
+/public/firebase-messaging-sw.js

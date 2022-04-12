@@ -14,7 +14,8 @@ return [
     */
 
     'config' => [
-        'hosts'     => ['es:9200'],
+
+        'hosts'     => [env('ELATICSEARCH_HOST') . ':' . env('ELATICSEARCH_PORT')],
         'retries'   => 1,
     ],
 

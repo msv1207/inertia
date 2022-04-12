@@ -12,17 +12,18 @@ class LoginCest
 //        $I = new WebGuy($scenario);
 //        $I->wantTo('log in as regular user');
 //        $I->disableMiddleware();
-//$I = New User;
-//$I->
+        //$I = New User;
+        //$I->
 
 //        $I = new TestGuy($scenario);
         $I->wantTo('check a page is resistant to POST injection');
         $I->amOnPage('/search');
 
         $I->sendPOST(
-            array(
+            [
                 'search' => 'fff',
-            ));
+            ]
+        );
         $I->see('Search results');
         $I->dontSee('Dodgy command executed');
 //        $I->amOnRoute('posts.index');

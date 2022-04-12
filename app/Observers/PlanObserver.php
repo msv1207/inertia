@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\WebNotification;
 use App\Models\Plan;
 use App\Notifications\SendCreateNotification;
 use App\Notifications\SendUpdateNotification;
@@ -34,6 +35,7 @@ class PlanObserver
             'startDateTime' => Carbon::parse($plan->started_at),
             'endDateTime' => Carbon::parse($plan->ended_at),
         ])->id;
+        event(new WebNotification('hello world'));
 
         $plan->event_id = $event_id;
         $plan->save();

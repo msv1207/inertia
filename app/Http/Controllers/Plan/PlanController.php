@@ -7,15 +7,14 @@ use App\Http\Requests\PlanCreateRequest;
 use App\Http\Requests\PlanUpdateRequest;
 use App\Models\Plan;
 use App\Services\StrInTime;
-use Illuminate\Http\Request;
+use App\Services\WebNotify;
 use Inertia\Inertia;
 
 class PlanController extends Controller
 {
     public function index()
     {
-
-      $plans = Plan::all();
+        $plans = Plan::all();
 
         return Inertia::render('Plan/Index', [
             'plans' => $plans,
@@ -24,6 +23,9 @@ class PlanController extends Controller
 
     public function store(PlanCreateRequest $request)
     {
+        $title = $request->title;
+        auth()->user()->update(['device_token'=>$request->token]);
+
         $date = StrInTime::strToDate($request->calendar);
 
         Plan::create([
@@ -33,6 +35,8 @@ class PlanController extends Controller
             'ended_at'=> $date['date2'],
         ]);
 
+        WebNotify::notify($title);
+
         return $this->index();
     }
 
@@ -40,7 +44,6 @@ class PlanController extends Controller
     {
         return Inertia::render('Plan/Edit', [
             'plan' => $plan->id,
-
         ]);
     }
 

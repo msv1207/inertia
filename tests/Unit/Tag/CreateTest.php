@@ -4,11 +4,10 @@ namespace Tests\Unit\Tag;
 
 use Carbon\Carbon;
 use Faker\Factory;
-use \Tests\Support\UnitTester;
+use Tests\Support\UnitTester;
 
 class CreateTest extends \Codeception\Test\Unit
 {
-
     protected UnitTester $tester;
 
     protected function _before()

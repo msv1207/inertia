@@ -24,9 +24,9 @@ class PlanUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255',
-            'description' => 'required|max:255',
-            'calendar' => 'required|array',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'calendar' => 'required|string|array',
         ];
     }
 }
