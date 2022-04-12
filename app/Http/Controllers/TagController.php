@@ -14,6 +14,6 @@ class TagController extends Controller
             ['post_id' => $id]
         );
 
-     return 'updated';
+        return 'updated';
     }
 }

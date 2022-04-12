@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostCreateRequest;
 use App\Models\Category;
-use App\Models\Plan;
 use App\Models\Post;
 use App\Models\SubCategory;
 use App\Models\Tag;
@@ -18,7 +17,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-Tag::reindex();
+        Tag::reindex();
         Post::reindex();
     }
 
@@ -29,12 +28,11 @@ Tag::reindex();
      */
     public function index()
     {
-
         cache()->remember('posts', 200, function () {
             return Post::latest()->paginate(200);
         });
 
-        $category =SubCategory::with('categories.posts')->get();
+        $category = SubCategory::with('categories.posts')->get();
         $posts = Cache::get('posts');
 
         return Inertia::render('Post/Index', [
@@ -42,7 +40,6 @@ Tag::reindex();
             'categories' => $category,
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -66,6 +63,7 @@ Tag::reindex();
         $cat = $mainCat->categories()->save(Category::create(['title' => $request->categoryTitle]));
         $cat->posts()->save(Post::create(['title' => $request->title,
             'description'=> $request->description, ]));
+
         return Redirect::route('posts.index');
     }
 
@@ -97,8 +95,8 @@ Tag::reindex();
             'post' => [
                 'id' => $post->id,
                 'title' => $post->title,
-                'mainCategoryTitle' => $post->category()->get()[0]->title,
-                'categoryTitle' => $post->category()->get()[0]->sub_category()->get()[0]->title,
+                'mainCategoryTitle' => $post->category->title,
+                'categoryTitle' => $post->category->sub_category->title,
                 'description' => $post->description,
             ],
         ]);
@@ -113,9 +111,9 @@ Tag::reindex();
      */
     public function update(Request $request, Post $post)
     {
-       $post
+        $post
            ->update(['title' => $request->title, 'description'=>$request->description]);
-       $post->category
+        $post->category
            ->update(['title' => $request->categoryTitle]);
         $post->category->sub_category
             ->update([['title' => $request->mainCategoryTitle]]);

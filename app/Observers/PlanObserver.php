@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Observers;
+
 use App\Models\Plan;
 use App\Notifications\SendCreateNotification;
 use App\Notifications\SendUpdateNotification;
@@ -9,7 +10,6 @@ use Spatie\GoogleCalendar\Event;
 
 class PlanObserver
 {
-
     /**
      * Handle the plan "created" event.
      *
@@ -18,8 +18,6 @@ class PlanObserver
      */
     public function creating(Plan $plan)
     {
-
-
     }
 
     /**
@@ -30,15 +28,14 @@ class PlanObserver
      */
     public function created(Plan $plan)
     {
-
-        $event_id=Event::create([
+        $event_id = Event::create([
             'name' => $plan->name,
             'description' => $plan->description,
             'startDateTime' => Carbon::parse($plan->started_at),
             'endDateTime' => Carbon::parse($plan->ended_at),
         ])->id;
 
-        $plan->event_id=$event_id;
+        $plan->event_id = $event_id;
         $plan->save();
         $plan->notify(new SendCreateNotification($plan->name));
     }
@@ -60,7 +57,6 @@ class PlanObserver
             'endDateTime' => Carbon::parse($plan->ended_at),
         ]);
         $plan->notify(new SendUpdateNotification($plan->name));
-
     }
 
     /**
@@ -84,7 +80,6 @@ class PlanObserver
      */
     public function restored(Plan $plan)
     {
-
     }
 
     /**
@@ -95,6 +90,5 @@ class PlanObserver
      */
     public function forceDeleted(Plan $plan)
     {
-
     }
 }

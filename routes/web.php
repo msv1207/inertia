@@ -11,7 +11,6 @@ use App\Models\Post;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Spatie\GoogleCalendar\Event;
 
 Route::get('auth/google', [GoogleSocialiteController::class, 'redirectToGoogle']);
 Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback']);
@@ -43,7 +42,6 @@ Route::get('/dashboard', function () {
 Route::resource('tree', TreeController::class);
 
 Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('bd.pdf');
-
 
 Route::resource('plans', PlanController::class);
 

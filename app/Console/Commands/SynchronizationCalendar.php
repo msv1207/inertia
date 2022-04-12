@@ -29,43 +29,40 @@ class SynchronizationCalendar extends Command
      */
     public function handle()
     {
+        $events = Event::get();
+        $plans = [];
+        $i = 0;
+        foreach ($events as $event) {
+            $plans[$i]['event_id'] = $event->id;
+            $plans[$i]['name'] = $event->name;
+            $plans[$i]['description'] = $event->description;
+            $plans[$i]['started_at'] = $event->startDateTime->toDateTimeString();
+            $plans[$i]['ended_at'] = $event->endDateTime->toDateTimeString();
 
-       $events= Event::get();
-        $plans=[];
-        $i=0;
-       foreach ($events as $event) {
-           $plans[$i]['event_id']=$event->id;
-           $plans[$i]['name']=$event->name;
-           $plans[$i]['description']=$event->description;
-           $plans[$i]['started_at']=$event->startDateTime->toDateTimeString();
-           $plans[$i]['ended_at']=$event->endDateTime->toDateTimeString();
-
-           $i++;
-       }
+            $i++;
+        }
 //       dd(json_encode( $plans));
 //        $events=array($events);
 //        var_dump($events);
 //        die();
 //        dd( $plans[5]['ended_at']->toDateTimeString());
-           Plan::upsert(
-              $plans,
-               [
+        Plan::upsert(
+            $plans,
+            [
                    'event_id',
                    'name',
                    'description',
                    'started_at',
-                   'ended_at'
+                   'ended_at',
 
                ],
-               [
+            [
                    'event_id',
                    'name',
                    'description',
                    'started_at',
-                   'ended_at'
+                   'ended_at',
                ]
-
-           );
-
+        );
     }
 }

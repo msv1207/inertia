@@ -29,6 +29,7 @@
                 </div>
 
                 <!-- submit -->
+<div>
                     <button
                         class="
                                         px-6
@@ -40,6 +41,7 @@
                     >
                         search
                     </button>
+</div>
 
                 <ul id="example-1">
                     <li v-for="item in searchRes" :key="item.title">
@@ -60,13 +62,16 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="mb-4">
-                        <div :style="  {  'float' : 'left',  'width': '600px'} ">
+
+                            <div  :style="  {  'float' : 'left',  'width': '600px'} ">
                             <TreeBrowser
                                 :nodes="root"
                                 @onClick="nodeWasClicked"
                             />
-                        </div>
-                        <div v-if="isOpen" :style="  {  'float' : 'right'} ">
+                             </div>
+<div id="My">
+                        <div  :style="  {  'float' : 'right'} " >
+<!--                            <div  :style="  {  'float' : 'right'} " v-show="visible">-->
 
                         <form @submit.prevent="createNew()">
 <div>
@@ -159,6 +164,7 @@
                         </div>
                             </form>
 </div>
+                        </div>
 
 
 
@@ -167,9 +173,6 @@
                     </div>
                         <div :style="  {  'float' : 'left',  'width': '1000px', 'margin-right': '110'} ">
                             <div>
-                                <div>
-                                    <p  class="text-green-700" @click="isShow = !isShow"> Create</p>
-                                </div>
 <!--                            <Link-->
 <!--                                class="-->
 <!--                                    px-6-->
@@ -284,6 +287,7 @@ export default {
         categories: [],
         searchRes: []
     },
+    el: '#My',
 
     data(){
         return {
@@ -321,7 +325,10 @@ export default {
         }
     },
     methods: {
-
+test()
+{
+    alert('dcdcd')
+},
         createNew() {
             this.form2.post('/tree');
         },

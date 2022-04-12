@@ -201,7 +201,6 @@ return [
         'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
-
     ])->toArray(),
 
 ];

@@ -7,8 +7,9 @@
                 Plan
             </h2>
             <!--{{root[1].title}}-->
-            <div :style="{'float': 'right', 'margin-right': '0'}">
+            <div :style="{'float': 'right', 'margin-right': '300', 'width': '600px'}">
                 <H1>Create new </H1>
+                <div>
             <form @submit.prevent="submit()">
                 <div>
                     <label for="title">title</label>
@@ -74,6 +75,7 @@
                     </button>
                 </div>
             </form>
+                </div>
                 </div>
 
             <br>

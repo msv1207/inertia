@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -14,19 +13,19 @@ return new class extends Migration
     public function up()
     {
         Schema::create('google_accounts', function (Blueprint $table) {
-                $table->increments('id');
+            $table->increments('id');
 
-                // Relationships.
+            // Relationships.
 
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-                // Data.
-                $table->string('google_id');
-                $table->string('name');
-                $table->json('token');
+            // Data.
+            $table->string('google_id');
+            $table->string('name');
+            $table->json('token');
 
-                // Timestamps.
-                $table->timestamps();
+            // Timestamps.
+            $table->timestamps();
         });
     }
 

@@ -1,6 +1,9 @@
 actor: FunctionalTester
 modules:
   enabled:
+#    - PhpBrowser:
+#        url: http://localhost:8002/
+
     - Laravel:
         - \Helper\Functional
           environment_file: .env.testing

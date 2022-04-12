@@ -18,14 +18,14 @@ class Tag extends Model
         'title' => [
             'type' => 'text',
             'analyzer' => 'standard',
-        ]
+        ],
     ];
 
-
-    function getIndexName()
+    public function getIndexName()
     {
         return 'tags';
     }
+
     public function posts()
     {
         return $this->belongsTo(Post::class);

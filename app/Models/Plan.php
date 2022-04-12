@@ -15,8 +15,11 @@ class Plan extends Model
 
     public function routeNotificationForSlack($notification)
     {
-        return 'https://hooks.slack.com/services/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';
+
+//        env('SLACK_BOT');
+        return  env('SLACK_BOT');
     }
+
     public function calendar()
     {
         return $this->belongsTo(Calendar::class);
