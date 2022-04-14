@@ -3,6 +3,8 @@
 
     <BreezeAuthenticatedLayout>
         <template #header>
+<!--{{process.env.MIX_API_KEY}}-->
+<!--            {{    app.options}}-->
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Plan
             </h2>
@@ -119,11 +121,12 @@
                 </tr>
             </tbody>
             </table>
-
         </template>
 
     </BreezeAuthenticatedLayout>
 </template>
+
+<!--<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>-->
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
@@ -137,27 +140,81 @@ import draggable from 'vuedraggable'
 import DatePicker, { CalendarDialog } from 'vue-time-date-range-picker/dist/vdprDatePicker'
 import 'vue-time-date-range-picker/dist/vdprDatePicker.min.css'
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getMessaging , onMessage, getToken} from "firebase/messaging";
+import { onBackgroundMessage } from "firebase/messaging/sw";
 
+// import {messaging} from 'firebase/messaging'
+// import {firebase} from 'firebase/app';
+
+// const messaging = getMessaging();
+// onBackgroundMessage(messaging, (payload) => {
+//     console.log('[firebase-messaging-sw.js] Received background message ', payload);
+//     // Customize notification here
+//     const notificationTitle = 'Background Message Title';
+//     const notificationOptions = {
+//         body: 'Background Message body.',
+//         icon: '/firebase-logo.png'
+//     };
+//
+//     self.registration.showNotification(notificationTitle,
+//         notificationOptions);
+// });
 
 const firebaseConfig = {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESENGER_SENDING_ID,
-    appId: process.env.APP_ID,
-    measurementId: process.env.MEASUREMENT_ID
+    // apiKey: process.env.API_KEY,
+    // authDomain: process.env.AUTH_DOMAIN,
+    // projectId: process.env.PROJECT_ID,
+    // storageBucket: process.env.STORAGE_BUCKET,
+    // messagingSenderId: process.env.MESENGER_SENDING_ID,
+    // appid: process.env.APP_ID,
+    // measurementId: process.env.MEASUREMENT_ID
+    apiKey: "AIzaSyA2t8wf8-wUmlSF7acgDpoeupB71nuhJfU",
+    authDomain: "laravel-6ac8c.firebaseapp.com",
+    databaseURL: "https://laravel-6ac8c-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "laravel-6ac8c",
+    storageBucket: "laravel-6ac8c.appspot.com",
+    messagingSenderId: "814380693226",
+    appId: "1:814380693226:web:f8130643ace114df98c993",
+    measurementId: "G-VDQDMEEYJ2"
 };
+let firebase = initializeApp(firebaseConfig);
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const messaging = getMessaging();
+// onMessage(messaging, (payload) => {
+//     console.log('[firebase-messaging-sw.js] Received background message ', payload);
+//     // Customize notification here
+//     const notificationTitle = 'Background Message Title';
+//     const notificationOptions = {
+//         body: 'Background Message body.',
+//         icon: '/firebase-logo.png'
+//     };
+//     //
+//     // self.registration.showNotification(notificationTitle,
+//     //     notificationOptions);
+// });
+
+
+let messaging = getMessaging(firebase);
+// // const messaging = firebase.messaging();
+onMessage(messaging, (payload) => {
+    console.log('Message received. ', payload);
+    navigator.serviceWorker.getRegistration('/firebase-cloud-messaging-push-scope').then(registration => {
+        registration.showNotification(
+            payload.notification.title,
+            payload.notification
+        )
+    });
+  
+});
+
+// let app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 class Event {
     constructor(name, value) {
         this.name = name;
         this.value = value;
         this.time = new Date();
-    }
+    };
 }
 
 export default {
@@ -167,7 +224,7 @@ export default {
             title: null,
             calendar:null,
             description:null,
-            token: app.options.apiKey
+            token: null,
 
         })
 
@@ -209,7 +266,23 @@ export default {
     },
     methods: {
         submit() {
-            Inertia.post('/plans', this.form)
+            getToken(messaging, { vapidKey: 'BFlFYuVmWXfzrDWTZhY0_uRLUT4Hl8cK8DuRocE7ocIJn311UXJWZTI4zcLcQdamOD5DR8G1hEn8soVGqhby4_0' }).then((currentToken) => {
+                if (currentToken) {
+                    // Send the token to your server and update the UI if necessary
+                    // ...
+                    this.form.token=currentToken;
+                    Inertia.post('/plans', this.form)
+
+                } else {
+                    // Show permission request UI
+                    console.log('No registration token available. Request permission to generate one.');
+                    // ...
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+                // ...
+            });
+
         },
         selectDate(date1, date2)
 {

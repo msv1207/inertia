@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Events\WebNotification;
 use App\Models\Plan;
-use App\Notifications\SendCreateNotification;
+use App\Notifications\SendNotification;
 use App\Notifications\SendUpdateNotification;
 use Carbon\Carbon;
 use Spatie\GoogleCalendar\Event;
@@ -35,11 +35,10 @@ class PlanObserver
             'startDateTime' => Carbon::parse($plan->started_at),
             'endDateTime' => Carbon::parse($plan->ended_at),
         ])->id;
-        event(new WebNotification('hello world'));
 
         $plan->event_id = $event_id;
         $plan->save();
-        $plan->notify(new SendCreateNotification($plan->name));
+        $plan->notify(new SendNotification($plan->name));
     }
 
     /**
@@ -58,7 +57,7 @@ class PlanObserver
             'startDateTime' => Carbon::parse($plan->started_at),
             'endDateTime' => Carbon::parse($plan->ended_at),
         ]);
-        $plan->notify(new SendUpdateNotification($plan->name));
+        $plan->notify(new SendNotification($plan->name));
     }
 
     /**

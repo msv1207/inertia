@@ -26,7 +26,7 @@ class PlanUpdateRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'calendar' => 'required|string|array',
+            'calendar' => 'required|array',
         ];
     }
 }

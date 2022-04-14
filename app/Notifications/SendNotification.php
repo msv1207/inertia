@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 
-class SendCreateNotification extends Notification
+class SendNotification extends Notification
 {
     use Queueable;
     private $notifi;
@@ -41,7 +41,7 @@ class SendCreateNotification extends Notification
     public function toSlack($notifiable)
     {
         return (new SlackMessage)
-            ->content('Created new event ' . $this->notifi);
+            ->content('Created new/Updated event ' . $this->notifi);
     }
 
     /**

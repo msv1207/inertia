@@ -31,8 +31,8 @@ services:
   es:
       image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
       ports:
-          - "9200:9200"
-          - "9300:9300"
+          - "127.0.0.1:9200:9200"
+          - "127.0.0.1:9300:9300"
       environment:
           - discovery.type=single-node
       networks:
