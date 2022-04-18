@@ -11,11 +11,10 @@ class SearchController extends Controller
 {
     public function index(SearchRequest $request)
     {
-        $result = Post::searchByQuery(['match' => ['title' => $request->search]]);
-//        if ($result->all() == false) {
-//            $result = Tag::searchByQuery(['match' => ['title' => $request->search]]);
-//
-//        }
+
+//        $result =Post::searchByQuery(['match' => ['title' => $request->search]]);
+        $result= Post::with('tags')->where('title', '=' ,$request->search)->get();
+
         return Inertia::render('Post/Index', [
         'searchRes' => $result,
     ]);

@@ -15,7 +15,6 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        Tag::reindex();
         Post::reindex();
     }
 

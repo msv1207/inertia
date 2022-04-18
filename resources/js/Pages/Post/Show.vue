@@ -12,8 +12,8 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <h1>Description:</h1>
-                        <div>
-                            <p>{{posts.description}}</p>
+                        <div
+                                v-html="posts.description">
                         </div>
                         <Link
                             class="text-green-700"

@@ -3,16 +3,16 @@
 
     <BreezeAuthenticatedLayout>
         <template #header>
-            <div  :style="  {  'float' : 'left'} ">
+<!--            <div  :style="  {  'float' : 'left'} ">-->
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Post
             </h2>
-                </div>
-            <div  :style="  {  'float' : 'right'} ">
-                <div>
+<!--                </div>-->
+<!--            <div  :style="  {  'float' : 'left'} ">-->
+<!--                <div>-->
                 <CustomModel/>
-                </div>
-            </div>
+<!--                </div>-->
+<!--            </div>-->
 
 <!--            <Modal-->
 <!--                v-model="isShow"-->
@@ -31,6 +31,8 @@
 
 <!--                <button @click="open = true">modal-basic</button>-->
 <!--            </div>&lt;!&ndash;            <custom-model></custom-model>&ndash;&gt;-->
+            <div  :style="  {  'float' : 'right'} ">
+
             <form @submit.prevent="submit">
                 <div>
                     <div class="input-group">
@@ -47,32 +49,9 @@
                         </button>
                     </div>
 </div>
-                <div v-show="show">
-                    <table class="table table-hover">
-                <thead>
-                <tr>
-<!--                    <th class="px-4 py-2">Post Id</th>-->
-                    <th class="px-4 py-2">Title</th>
-                    <th class="px-4 py-2">Description</th>
-                    <th class="px-4 py-2"></th>
 
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="post in searchRes" :key="post.id">
-<!--                    <td >{{ getPost(post) }}</td>-->
-<!--                    <td >{{ post.post_id }}</td>-->
-                    <td >{{ post.title }}</td>
-                    <td >{{ post.description }}</td>
-                    <td ></td>
-                    <td class="px-4 py-2 font-extrabold">
-                    </td>
-                </tr>
-                </tbody>
-                </table>
-                </div>
             </form>
-
+            </div>
         </template>
         <div id="app">
 
@@ -84,13 +63,43 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white">
                         <div class="mb-4">
+                            <div  :style="  {  'float' : 'left'} ">
+                                <MainCategotyModel/>
 
-                            <div  :style="  {  'float' : 'left',  'width': '600px'} ">
-                            <TreeBrowser
+                                <TreeBrowser
                                 :nodes="root"
                                 @onClick="nodeWasClicked"
                             />
                              </div>
+                            <div  :style="  {  'float' : 'right', 'width':'70%'} " v-show="show">
+                                <table class="table table-hover">
+                                    <col style="width:10%">
+                                    <col style="width:80%">
+                                    <col style="width:10%">
+                                    <thead>
+                                    <tr>
+                                        <!--                    <th class="px-4 py-2">Post Id</th>-->
+                                        <th class="px-4 py-2">Title</th>
+                                        <th  class="px-4 py-2">Description</th>
+                                        <th class="px-4 py-2">Tag</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="post in searchRes" :key="post.id">
+                                        <!--                    <td >{{ getPost(post) }}</td>-->
+                                        <!--                    <td >{{ post.post_id }}</td>-->
+                                        <td >{{ post.title }}</td>
+                                        <td
+                                            v-html="post.description"
+                                        ></td>
+                                        <td >{{ getTag(post.tags[0]) }}</td>
+                                        <td class="px-4 py-2 font-extrabold">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 <div id="My">
 
 
@@ -195,11 +204,11 @@
                     </div>
 
 
-                            <div :style="  {  'float' : 'left',  'width': '600px', 'margin-right':' 200px'} " >
+                            <div :style="  {  'float' : 'right'} " >
                         <table>
                             <thead class="font-bold bg-gray-300 border-b-2">
                             <tr>
-                                <th class="px-4 py-2" @click="sort('id')">Id</th>
+<!--                                <th class="px-4 py-2" @click="sort('id')">Id</th>-->
                                 <th class="px-4 py-2" @click="sort('title')">Title</th>
                                 <th class="px-4 py-2">Description</th>
                                 <th class="px-4 py-2">Tag</th>
@@ -208,9 +217,9 @@
                             </thead>
                             <tbody>
                             <tr v-for="post in sortedPosts" :key="post.id">
-                                <td >{{ post.id }}</td>
+<!--                                <td >{{ post.id }}</td>-->
                                 <td >{{ post.title }}</td>
-                                <td >{{ post.description }}</td>
+                                <td v-html="post.description"></td>
                                 <td > {{ getTag(post.tags[0]) }}</td>
 
                                 <td class="px-4 py-2 font-extrabold">
@@ -256,7 +265,8 @@ import draggable from 'vuedraggable'
 import Modal from "@/Jetstream/Modal";
 import { ref } from 'vue'
 import VueUniversalModal from 'vue-universal-modal'
-import CustomModel from "@/Components/CustomModel";
+import CustomModel from "@/Components/TreeModel";
+import MainCategotyModel from "@/Components/MainCategotyModel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 
@@ -302,7 +312,8 @@ export default {
         BreezeNavLink,
         Link,
         draggable,
-        CustomModel
+        CustomModel,
+        MainCategotyModel
     },
     props: {
         posts: [],

@@ -43,6 +43,14 @@ Route::resource('tree', TreeController::class, [
     'only' => ['store', 'update']
 ]);
 
+Route::post('maincat', [\App\Http\Controllers\MainCategoryController::class, 'store']);
+Route::post('category', [\App\Http\Controllers\CategoryController::class, 'store']);
+Route::post('post', [\App\Http\Controllers\PostSingleController::class, 'store']);
+
+Route::put('maincat/{id}', [\App\Http\Controllers\MainCategoryController::class, 'update']);
+Route::put('category/{id}', [\App\Http\Controllers\CategoryController::class, 'update']);
+Route::put('post/{id}', [\App\Http\Controllers\PostSingleController::class, 'update']);
+
 Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('bd.pdf');
 
 Route::resource('plans', PlanController::class);
