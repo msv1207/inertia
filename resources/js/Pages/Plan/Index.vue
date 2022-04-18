@@ -142,6 +142,7 @@ import 'vue-time-date-range-picker/dist/vdprDatePicker.min.css'
 import { initializeApp } from "firebase/app";
 import { getMessaging , onMessage, getToken} from "firebase/messaging";
 import { onBackgroundMessage } from "firebase/messaging/sw";
+import Modal from "@/Jetstream/Modal";
 
 // import {messaging} from 'firebase/messaging'
 // import {firebase} from 'firebase/app';
@@ -193,7 +194,6 @@ let firebase = initializeApp(firebaseConfig);
 //     //     notificationOptions);
 // });
 
-
 let messaging = getMessaging(firebase);
 // // const messaging = firebase.messaging();
 onMessage(messaging, (payload) => {
@@ -204,7 +204,7 @@ onMessage(messaging, (payload) => {
             payload.notification
         )
     });
-  
+
 });
 
 // let app = initializeApp(firebaseConfig);

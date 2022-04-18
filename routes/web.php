@@ -35,11 +35,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::view('/login2', 'auth/login');
+//Route::view('/login2', 'auth/login');
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::resource('tree', TreeController::class);
+Route::resource('tree', TreeController::class, [
+    'only' => ['store', 'update']
+]);
 
 Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('bd.pdf');
 

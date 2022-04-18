@@ -3,8 +3,8 @@ modules:
   enabled:
     - Asserts
     - Laravel:
-        - \Helper\Unit
-          environment_file: .env.testing
-          cleanup: true
-          run_database_migrations: true
+        part: ORM
+#    - \Helper\Unit
+#          cleanup: true
+#          run_database_migrations: true
 

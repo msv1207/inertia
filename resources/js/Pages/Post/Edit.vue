@@ -133,6 +133,7 @@ export default {
         post: Object,
     },
     methods: {
+
         submit() {
             this.form.put(route("posts.update", this.post.id));
         },

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use ElasticquentTrait;
+    use ElasticquentTrait, HasFactory;
 
     public function routeNotificationForSlack($notification)
     {
@@ -35,6 +35,8 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-    use HasFactory;
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 }

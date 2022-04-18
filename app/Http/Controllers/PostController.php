@@ -27,9 +27,9 @@ class PostController extends Controller
     public function index()
     {
         cache()->remember('posts', 200, function () {
-            return Post::latest()->paginate(200);
+            return Post::with('tags')->latest()->paginate(200);
         });
-
+//dd (Post::with('tags')->latest()->paginate(200)->all()[1]->tags);
         $category = SubCategory::with('categories.posts')->get();
         $posts = Cache::get('posts');
 

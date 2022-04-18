@@ -10,28 +10,41 @@
                               :key="node.title"
                               :style="{'margin-left': `${depth * 20}px`}"
             >
-    <p
+    <span
           @click="nodeClicked(node)"
-      >{{isExpanded(node) ? '&#8226 ' : ''}}{{node.title}}</p>
-
+      >{{isExpanded(node) ? '- ' : '+ '}}</span>
+                            <span @click="editPost(node.id)">{{node.title}}</span>
 <div v-if="node.description">
-            <Link
-                              class=  "text-black"
-                :href="route('posts.edit', node.id)"
-            >
-               Edit
-            </Link>
-                                <p class="active:bg-gray-100" @click="isOpen = !isOpen"> new tag</p>
+<!--            <Link-->
+<!--                              class=  "text-black"-->
+<!--                :href="route('posts.edit', node.id)"-->
+<!--            >-->
+<!--               Edit-->
+<!--            </Link>-->
+<!--    <EditModel/>-->
+    <div >
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+            Create tag
+        </button>
 
-            <div v-if="isOpen">
-                    <form @submit.prevent="createNewTag(node.id)">
-                        <div>
-                            <label for="title">Title tag</label>
-                            <input
-                                type="text"
-                                :id="node.id"
-                                v-model="form3.tag"
-                                class="
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-green-700" id="exampleModalLabel">Create tag</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="createNewTag(node.id)">
+                            <div>
+                                <label for="title">Title tag</label>
+                                <input
+                                    type="text"
+                                    :id="node.id"
+                                    v-model="form3.tag"
+                                    class="
                                                     w-full
                                                     px-4
                                                     py-2
@@ -42,24 +55,66 @@
                                                     focus:ring-1
                                                     focus:ring-blue-600
                                                 "
-                            />
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <button
-                                class="
-                                                    px-6
-                                                    py-2
-                                                    text-white
-                                                    bg-gray-900
-                                                    rounded
-                                                "
-                            >
-                                Save
-                            </button>
+                                />
+                            </div>
 
-                        </div>
+                            <!-- submit -->
+                            <div class="modal-footer">
+                                <button
+                                    class="btn btn-success"
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        </form>
 
-                </form>
+                    </div>
+                    <!--                    <div class="modal-footer">-->
+                    <!--                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+        </div>
+<!--    <TagModel :node="node"/>-->
+<!--                                <p class="active:bg-gray-100" @click="isOpen = !isOpen"> new tag</p>-->
+
+<!--            <div v-if="isOpen">-->
+<!--                    <form @submit.prevent="createNewTag(node.id)">-->
+<!--                        <div>-->
+<!--                            <label for="title">Title tag</label>-->
+<!--                            <input-->
+<!--                                type="text"-->
+<!--                                :id="node.id"-->
+<!--                                v-model="form3.tag"-->
+<!--                                class="-->
+<!--                                                    w-full-->
+<!--                                                    px-4-->
+<!--                                                    py-2-->
+<!--                                                    mt-2-->
+<!--                                                    border-->
+<!--                                                    rounded-md-->
+<!--                                                    focus:outline-none-->
+<!--                                                    focus:ring-1-->
+<!--                                                    focus:ring-blue-600-->
+<!--                                                "-->
+<!--                            />-->
+<!--                        </div>-->
+<!--                        <div class="flex items-center mt-4">-->
+<!--                            <button-->
+<!--                                class="-->
+<!--                                                    px-6-->
+<!--                                                    py-2-->
+<!--                                                    text-white-->
+<!--                                                    bg-gray-900-->
+<!--                                                    rounded-->
+<!--                                                "-->
+<!--                            >-->
+<!--                                Save-->
+<!--                            </button>-->
+
+<!--                        </div>-->
+
+<!--                </form>-->
             </div>
 </div>
 
@@ -104,6 +159,8 @@ import {Inertia} from "@inertiajs/inertia";
 import { VueDraggableNext } from 'vue-draggable-next'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import TagModel from "@/Components/TagModel";
+import EditModel from "@/Components/EditModel";
 
 export default {
 
@@ -135,9 +192,11 @@ export default {
     },
     name: "TreeBrowser",
     components: {
+        EditModel,
         Link,
         VueDraggableNext,
-        BButton
+        BButton,
+        TagModel
 
     },
 
@@ -161,6 +220,10 @@ export default {
         };
     },
     methods: {
+        editPost(id)
+        {
+// Inertia.post()
+        },
         createNewTag(id)
         {
             this.form3.post('/tag/'+ id);

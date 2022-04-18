@@ -35,7 +35,7 @@ class GoogleSocialiteController extends Controller
             if ($finduser) {
                 Auth::login($finduser);
 
-                return redirect('/home');
+                return redirect('/posts');
             } else {
                 $newUser = User::create([
                     'name' => $user->name,
@@ -47,7 +47,7 @@ class GoogleSocialiteController extends Controller
 
                 Auth::login($newUser);
 
-                return redirect('/home');
+                return redirect('/posts');
             }
         } catch (Exception $e) {
             dd($e->getMessage());

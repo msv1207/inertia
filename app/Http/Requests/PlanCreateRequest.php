@@ -27,7 +27,7 @@ class PlanCreateRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'calendar' => 'required|array',
-            'token' =>'required',
+//            'token' =>'required',
         ];
     }
 }

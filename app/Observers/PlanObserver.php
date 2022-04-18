@@ -2,10 +2,8 @@
 
 namespace App\Observers;
 
-use App\Events\WebNotification;
 use App\Models\Plan;
 use App\Notifications\SendNotification;
-use App\Notifications\SendUpdateNotification;
 use Carbon\Carbon;
 use Spatie\GoogleCalendar\Event;
 
