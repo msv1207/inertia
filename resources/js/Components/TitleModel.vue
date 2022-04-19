@@ -1,6 +1,5 @@
 <template>
     <!-- Button trigger modal -->
-    <span> &nbsp;</span>
 
     <button @click="Show=true" type="button" class="btn-rounded btn-outline-dark" data-bs-toggle="modal" data-bs-target="#tests">
         {{node.title}}

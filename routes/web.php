@@ -47,6 +47,11 @@ Route::post('maincat', [\App\Http\Controllers\MainCategoryController::class, 'st
 Route::post('category', [\App\Http\Controllers\CategoryController::class, 'store']);
 Route::post('post', [\App\Http\Controllers\PostSingleController::class, 'store']);
 
+
+Route::view('test', 'myPDF');
+
+Route::post('/filter', [\App\Http\Controllers\FilterController::class, 'index']);
+
 Route::put('maincat/{id}', [\App\Http\Controllers\MainCategoryController::class, 'update']);
 Route::put('category/{id}', [\App\Http\Controllers\CategoryController::class, 'update']);
 Route::put('post/{id}', [\App\Http\Controllers\PostSingleController::class, 'update']);

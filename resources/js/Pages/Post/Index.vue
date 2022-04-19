@@ -64,8 +64,10 @@
                     <div class="p-6 bg-white">
                         <div class="mb-4">
                             <div  :style="  {  'float' : 'left'} ">
-                                <MainCategotyModel/>
 
+                                <MainCategotyModel/>
+<br>
+                                <br>
                                 <TreeBrowser
                                 :nodes="root"
                                 @onClick="nodeWasClicked"
@@ -81,20 +83,52 @@
                                         <!--                    <th class="px-4 py-2">Post Id</th>-->
                                         <th class="px-4 py-2">Title</th>
                                         <th  class="px-4 py-2">Description</th>
-                                        <th class="px-4 py-2">Tag</th>
+                                        <th class="px-4 py-2"></th>
 
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr v-for="post in searchRes" :key="post.id">
+                                    <tbody >
+                                    <tr class="holder" v-for="post in searchRes" :key="post.id">
                                         <!--                    <td >{{ getPost(post) }}</td>-->
                                         <!--                    <td >{{ post.post_id }}</td>-->
-                                        <td >{{ post.title }}</td>
+                                        <td >{{ post.title }} <button  @click="filter(post)" class="badge btn-success">{{ post.tag }}</button></td>
+
                                         <td
                                             v-html="post.description"
                                         ></td>
-                                        <td >{{ getTag(post.tags[0]) }}</td>
-                                        <td class="px-4 py-2 font-extrabold">
+<!--                                        <a @click="filter(post)" class="badge badge-info">{{ post.tag }}</a>-->
+<!--                                        <button @click="filter(post)" type="button" class="btn btn-outline-info">{{ post.tag }}</button>-->
+<!--                                        <a href="#" class="badge badge-info">Info</a>-->
+
+<!--                                        <td @click="filter(post)">{{ post.tag }}</td>-->
+                                        <td class='block'>
+<!--                                            <PostModel />-->
+<!--                                            <TitleModel :node="post"/>-->
+<!--                                            <button-->
+<!--                                                class="btn-rounded btn-outline-success"-->
+<!--                                            ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">-->
+<!--                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>-->
+<!--                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>-->
+<!--                                            </svg></button>-->
+                                            <TableModel :node="post"/>
+                                            <span> &nbsp;</span>
+
+<!--                                            <Link-->
+<!--                                                class="text-green-700"-->
+<!--                                                :href="route('posts.show', post.id)"-->
+<!--                                            >-->
+<!--                                                Show-->
+<!--                                            </Link>-->
+                                            <button
+                                                @click="destroy(post.id)"
+                                                class="btn-rounded btn-outline-danger"
+                                            ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg></button>
+                                            <br>
+
+                                            <br>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -204,44 +238,44 @@
                     </div>
 
 
-                            <div :style="  {  'float' : 'right'} " >
-                        <table>
-                            <thead class="font-bold bg-gray-300 border-b-2">
-                            <tr>
-<!--                                <th class="px-4 py-2" @click="sort('id')">Id</th>-->
-                                <th class="px-4 py-2" @click="sort('title')">Title</th>
-                                <th class="px-4 py-2">Description</th>
-                                <th class="px-4 py-2">Tag</th>
-                                <th class="px-4 py-2">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="post in sortedPosts" :key="post.id">
-<!--                                <td >{{ post.id }}</td>-->
-                                <td >{{ post.title }}</td>
-                                <td v-html="post.description"></td>
-                                <td > {{ getTag(post.tags[0]) }}</td>
+<!--                            <div :style="  {  'float' : 'right'} " >-->
+<!--                        <table>-->
+<!--                            <thead class="font-bold bg-gray-300 border-b-2">-->
+<!--                            <tr>-->
+<!--&lt;!&ndash;                                <th class="px-4 py-2" @click="sort('id')">Id</th>&ndash;&gt;-->
+<!--                                <th class="px-4 py-2" @click="sort('title')">Title</th>-->
+<!--                                <th class="px-4 py-2">Description</th>-->
+<!--                                <th class="px-4 py-2">Tag</th>-->
+<!--                                <th class="px-4 py-2">Actions</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr v-for="post in sortedPosts" :key="post.id">-->
+<!--&lt;!&ndash;                                <td >{{ post.id }}</td>&ndash;&gt;-->
+<!--                                <td >{{ post.title }}</td>-->
+<!--                                <td v-html="post.description"></td>-->
+<!--                                <td > {{ getTag(post.tags[0]) }}</td>-->
 
-                                <td class="px-4 py-2 font-extrabold">
-                                    <Link class="text-green-700" :href="route('posts.edit', post.id)">
-                                        Edit
-                                    </Link>
-                                    <br>
-                                    <Link
-                                        class="text-green-700"
-                                        :href="route('posts.show', post.id)"
-                                    >
-                                        Show
-                                    </Link>
-                                    <Link
-                                        @click="destroy(post.id)"
-                                        class="text-red-700"
-                                    >Delete</Link>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+<!--                                <td class="px-4 py-2 font-extrabold">-->
+<!--                                    <Link class="text-green-700" :href="route('posts.edit', post.id)">-->
+<!--                                        Edit-->
+<!--                                    </Link>-->
+<!--                                    <br>-->
+<!--                                    <Link-->
+<!--                                        class="text-green-700"-->
+<!--                                        :href="route('posts.show', post.id)"-->
+<!--                                    >-->
+<!--                                        Show-->
+<!--                                    </Link>-->
+<!--                                    <Link-->
+<!--                                        @click="destroy(post.id)"-->
+<!--                                        class="text-red-700"-->
+<!--                                    >Delete</Link>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
                 </div>
 
 
@@ -269,7 +303,10 @@ import CustomModel from "@/Components/TreeModel";
 import MainCategotyModel from "@/Components/MainCategotyModel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-
+import PostModel from "@/Components/PostModel";
+import TitleModel from "@/Components/TitleModel";
+import TagModel from "@/Components/TagModel";
+import TableModel from "@/Components/TableModel";
 // app.use(VueUniversalModal, {
 //     teleportTarget: '#modals'
 // })
@@ -305,6 +342,7 @@ export default {
         },
     name: "app",
     components: {
+        PostModel,
         Modal,
         BreezeAuthenticatedLayout,
         Head,
@@ -313,7 +351,10 @@ export default {
         Link,
         draggable,
         CustomModel,
-        MainCategotyModel
+        MainCategotyModel,
+        TitleModel,
+        TagModel,
+        TableModel
     },
     props: {
         posts: [],
@@ -359,6 +400,11 @@ export default {
     },
 
     methods: {
+            filter(title)
+            {
+                Inertia.post('/filter', title)
+
+            },
             getPost(post)
             {
                 if (typeof post.post_id === 'undefined')
@@ -389,13 +435,17 @@ export default {
     },
 };
 </script>
-<!--<style scoped lang="scss">-->
-<!--.modal {-->
-<!--    width: 300px;-->
-<!--    padding: 30px;-->
-<!--    box-sizing: border-box;-->
-<!--    background-color: #fff;-->
-<!--    font-size: 20px;-->
-<!--    text-align: center;-->
-<!--}-->
-<!--</style>-->
+<style scoped lang="css">
+.block{
+    /*position:absolute;*/
+    /*left:0;*/
+    /*bottom:0;*/
+    /*right:0;*/
+    /*background:rgba(255,255,255, 0.7);*/
+    /*padding:20px;*/
+    display:none
+}
+.holder:hover .block{
+    display:block;
+}
+</style>

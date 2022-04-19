@@ -19,6 +19,7 @@ class Post extends Model
     'title',
     'description',
         'category_id',
+        'tag'
     ];
     protected ?array $mappingProperties = [
         'title' => [

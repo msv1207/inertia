@@ -16,7 +16,7 @@ class PostSingleController extends Controller
 
     public function update($id, Request $request)
     {
-
+dd($request->all());
         $post=Post::find($id);
 
         $post->update(['title'=>$request->title, 'description'=>$request->description]);

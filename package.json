@@ -41,6 +41,7 @@
         "color-hash": "^2.0.1",
         "firebase": "^9.6.10",
         "laravel-echo": "^1.11.4",
+        "laravel-vue-pagination": "^3.0.0",
         "pusher-js": "^7.0.6",
         "quill-image-drop-module": "^1.0.3",
         "quill-image-resize-module": "^3.0.0",

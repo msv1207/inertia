@@ -5,122 +5,68 @@
         <template #header>
 <!--{{process.env.MIX_API_KEY}}-->
 <!--            {{    app.options}}-->
+
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Plan
             </h2>
-            <div :style="{'float': 'right', 'margin-right': '300', 'width': '600px'}">
-                <H1>Create new </H1>
-                <div>
-            <form @submit.prevent="submit()">
-                <div>
-                    <label for="title">title</label>
-                    <input
-                        v-model="form.title"
-                        type="text"
-                        id="title"
-                        class="
-                                        w-full
-                                        px-4
-                                        py-2
-                                        mt-2
-                                        border
-                                        rounded-md
-                                        focus:outline-none
-                                        focus:ring-1
-                                        focus:ring-blue-600
-                                    "
-                    />
-                </div>
-                <div>
-                    <label for="description">description</label>
-                    <input
-                        v-model="form.description"
-                        type="text"
-                        id="description"
-                        class="
-                                        w-full
-                                        px-4
-                                        py-2
-                                        mt-2
-                                        border
-                                        rounded-md
-                                        focus:outline-none
-                                        focus:ring-1
-                                        focus:ring-blue-600
-                                    "
-                    />
-                </div>
-                <div id="app">
-                    <date-picker
-                        language="fr"
-                        :dateInput="dateInput"
-                        :show-helper-buttons="true"
-                        :switch-button-initial="true"
-                        :is-monday-first="true"
-                        @date-applied="selectDate"
-                    />
-                </div>
 
-                <!-- submit -->
-                <div class="flex items-center mt-4">
-                    <button
-                        class="
-                                        px-6
-                                        py-2
-                                        text-white
-                                        bg-gray-900
-                                        rounded
-                                    "
-                    >
-                        Send
-                    </button>
-                </div>
-            </form>
-                </div>
-                </div>
-
-            <br>
-
+            <div :style="{'float': 'right'}">
+                <PlanModel />
+            </div>
             <div>
-            <a class="px-6
-                                    py-2
-                                    mb-2
-                                    text-green-100
-                                    bg-green-500
-                                    rounded" v-bind:href="'/generate-pdf'"> Pdf generete</a>
+            <a class="btn btn-success" :href="'/generate-pdf'"> Pdf generete</a>
 </div>
             <br>
 
-            <table>
-                <thead class="font-bold bg-gray-300 border-b-2">
+            <table class="table table-hover">
+                <col style="width:5%">
+                <col style="width:55%">
+                <col style="width:25%">
+                <col style="width:5%">
+
+                <thead >
                 <tr>
-                    <th class="px-4 py-2">Id</th>
                     <th class="px-4 py-2">Title</th>
                     <th class="px-4 py-2">Description</th>
                     <th class="px-4 py-2">Time</th>
                     <th class="px-4 py-2">Actions</th>
                 </tr>
-                </thead>
-                <tbody>
-                <tr v-for="plan in plans" :key="plan.id">
-                    <td >{{ plan.id }}</td>
+                </thead >
+                <tbody >
+                <tr class="holder" v-for="plan in plans.data" :key="plan.id">
                     <td >{{ plan.name }}</td>
                     <td >{{ plan.description }}</td>
-                    <td >From {{ plan.started_at}} to {{ plan.ended_at}}</td>
-                    <td class="px-4 py-2 font-extrabold">
-                        <Link class="text-green-700" :href="route('plans.edit', plan.id)">
-                            Edit
-                        </Link>
-                        <br>
+                    <td > {{ plan.started_at}}  <br>
+                        {{ plan.ended_at}}</td>
+                    <td class='block'>
+                        <button href="route('plans.edit', plan.id)" class="btn-rounded btn-outline-success" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                        </button>
+<br>
+                        <button class="btn-rounded btn-outline-danger "  @click="destroy(plan.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                            </svg>
+                        </button>
+<!--                        <Link class="text-green-700" :href="route('plans.edit', plan.id)">-->
+<!--                            Edit-->
+<!--                        </Link>-->
+<!--                        <br>-->
 
-                        <Link
-                            @click="destroy(plan.id)"
-                            class="text-red-700"
-                        >Delete</Link>
+<!--                        <Link-->
+<!--                            @click="destroy(plan.id)"-->
+<!--                            class="text-red-700"-->
+<!--                        >Delete</Link>-->
                     </td>
                 </tr>
             </tbody>
             </table>
+            <pagination :data="plans" @pagination-change-page="getResults"></pagination>
+
         </template>
 
     </BreezeAuthenticatedLayout>
@@ -129,6 +75,7 @@
 <!--<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>-->
 
 <script>
+import pagination from 'laravel-vue-pagination';
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeNavLink from "@/Components/NavLink.vue";
 import { Head } from "@inertiajs/inertia-vue3";
@@ -141,8 +88,10 @@ import DatePicker, { CalendarDialog } from 'vue-time-date-range-picker/dist/vdpr
 import 'vue-time-date-range-picker/dist/vdprDatePicker.min.css'
 import { initializeApp } from "firebase/app";
 import { getMessaging , onMessage, getToken} from "firebase/messaging";
+
 import { onBackgroundMessage } from "firebase/messaging/sw";
 import Modal from "@/Jetstream/Modal";
+import PlanModel from "@/Components/PlanModel";
 
 // import {messaging} from 'firebase/messaging'
 // import {firebase} from 'firebase/app';
@@ -239,7 +188,9 @@ export default {
         Link,
         draggable,
         DatePicker,
-        CalendarDialog
+        CalendarDialog,
+        PlanModel,
+        pagination
     },
     props: {
         plans: [],
@@ -265,6 +216,19 @@ export default {
     computed:{
     },
     methods: {
+        getResults(page) {
+            if (typeof page === 'undefined') {
+                page = 1;
+            }
+
+            // console.log(this.plans)
+             Inertia.get('/plans?page=' + page)
+            //     .then(response => {
+            //         return response.json();
+            //     }).then(data => {
+            //     this.laravelData = data;
+            // });
+        },
         submit() {
             getToken(messaging, { vapidKey: 'BFlFYuVmWXfzrDWTZhY0_uRLUT4Hl8cK8DuRocE7ocIJn311UXJWZTI4zcLcQdamOD5DR8G1hEn8soVGqhby4_0' }).then((currentToken) => {
                 if (currentToken) {
@@ -306,3 +270,17 @@ export default {
     },
 };
 </script>
+<style scoped lang="css">
+.block{
+    /*position:absolute;*/
+    /*left:0;*/
+    /*bottom:0;*/
+    /*right:0;*/
+    /*background:rgba(255,255,255, 0.7);*/
+    /*padding:20px;*/
+    display:none
+}
+.holder:hover .block{
+    display:block;
+}
+</style>

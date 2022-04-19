@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PlanCreateRequest;
 use App\Http\Requests\PlanUpdateRequest;
 use App\Models\Plan;
+use App\Services\DateForUser;
 use App\Services\StrInTime;
 use App\Services\WebNotify;
+use Carbon\Carbon;
 use http\Client\Request;
 use Inertia\Inertia;
 
@@ -15,8 +17,8 @@ class PlanController extends Controller
 {
     public function index()
     {
-        $plans = Plan::all();
-
+        $plans = Plan::paginate(10);
+        $plans=DateForUser::index($plans);
         return Inertia::render('Plan/Index', [
             'plans' => $plans,
         ]);
@@ -28,6 +30,7 @@ class PlanController extends Controller
         auth()->user()->update(['device_token'=>$request->token]);
 
         $date = StrInTime::strToDate($request->calendar);
+//        $date['date1']=date("l dS F Y h:i:s A", $date['date1'] );
 
         Plan::create([
                 'name'=>$request->title,
