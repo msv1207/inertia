@@ -11,11 +11,10 @@ class PDFController extends Controller
     public function generatePDF()
     {
         $data = Plan::all();
-        $plans=DateForUser::index($data);
+        $plans = DateForUser::index($data);
 
         $pdf = PDF::loadView('myPDF', ['all_items'=>$plans]);
 
         return  $pdf->download('plans.pdf');
-//          return view('myPDF');
     }
 }

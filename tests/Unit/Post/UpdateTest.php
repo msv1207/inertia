@@ -3,11 +3,10 @@
 namespace Tests\Unit\Post;
 
 use App\Models\Post;
-use \Tests\Support\UnitTester;
+use Tests\Support\UnitTester;
 
 class UpdateTest extends \Codeception\Test\Unit
 {
-
     protected UnitTester $tester;
 
     protected function _before()
@@ -21,8 +20,8 @@ class UpdateTest extends \Codeception\Test\Unit
         // access model
 //        dd($id);
         $post = Post::find($post->id);
-//$post->update(['title'=>])
-        $post->title='bill';
+        //$post->update(['title'=>])
+        $post->title = 'bill';
         $post->save();
 //        dd($post);
 //        $this->assertEquals('bill', $post->getName());

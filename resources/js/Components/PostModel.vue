@@ -2,22 +2,21 @@
     <!-- Button trigger modal -->
     <span> &nbsp;</span>
 
-    <button type="button" class="btn-rounded btn-outline-success" data-bs-toggle="modal" data-bs-target="#post">
+    <button @click="Show=!Show" type="button"            style="color: #198754"
+            data-bs-toggle="modal" data-bs-target="#test">
         <!--        <i class="fas fa-magic"></i>-->
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-        </svg>    </button>
+        <i class="bi bi-plus-circle-fill"></i>
+    </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div v-if="Show" class="modal fade " id="test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header modal-lg">
                     <h5 class="modal-title text-green-700" id="exampleModalLabel">Create Post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body modal-lg">
                     <form @submit.prevent="createNew()">
                         <div>
                             <label for="title">Title Post</label>
@@ -46,7 +45,7 @@
                                             </vue-editor>
                         </div>
                         <!-- submit -->
-                        <div class="modal-footer">
+                        <div class="modal-footer modal-lg">
                             <button
                                 class="btn btn-success"
                             >
@@ -66,6 +65,8 @@
 </template>
 <script>
 //importing bootstrap 5
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import { VueEditor } from "vue3-editor";
@@ -81,6 +82,8 @@ export default {
                 title: null,
                 description: null,
             }),
+            Show:false
+
         }
     },
     props:{

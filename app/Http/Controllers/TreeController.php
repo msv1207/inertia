@@ -45,7 +45,7 @@ class TreeController extends Controller
             'category_id' => $category_id,
         ]);
 
-        return 'success';
+        return (new PostController)->index();
     }
 
     public function update(UpdateTreeRequest $request)
@@ -54,7 +54,7 @@ class TreeController extends Controller
         $posts->category_id = $request->category_id;
         $posts->save();
 
-        return 'success';
+        return (new PostController)->index();
     }
 
     /**

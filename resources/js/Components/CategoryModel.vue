@@ -2,15 +2,14 @@
     <!-- Button trigger modal -->
     <span> &nbsp;</span>
 
-    <button type="button" class="btn-rounded btn-outline-success" data-bs-toggle="modal" data-bs-target="#Cate">
+    <button @click="Show=!Show" type="button"             style="color: #198754"
+            data-bs-toggle="modal" data-bs-target="#Cate">
         <!--        <i class="fas fa-magic"></i>-->
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-        </svg> </button>
+        <i class="bi bi-plus-circle-fill"></i>
+    </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="Cate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div v-if="Show" class="modal fade" id="Cate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -58,11 +57,14 @@
 </template>
 <script>
 //importing bootstrap 5
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 export default {
     data(){
         return {
+            Show:false,
             form3 : this.$inertia.form({
                 categoryTitle: null,
                 sub_category_id : this.sub_category,

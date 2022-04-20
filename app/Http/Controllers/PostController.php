@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\SubCategory;
-use App\Models\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 //use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
@@ -15,7 +13,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        Post::reindex();
+        Post::addAllToIndex();
     }
 
     /**
@@ -25,15 +23,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        cache()->remember('posts', 200, function () {
-            return Post::with('tags')->latest()->paginate(200);
-        });
-//dd (Post::with('tags')->latest()->paginate(200)->all()[1]->tags);
         $category = SubCategory::with('categories.posts')->get();
-        $posts = Cache::get('posts');
 
         return Inertia::render('Post/Index', [
-            'posts' => $posts,
             'categories' => $category,
         ]);
     }

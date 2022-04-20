@@ -40,15 +40,12 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::resource('tree', TreeController::class, [
-    'only' => ['store', 'update']
+    'only' => ['store', 'update'],
 ]);
 
 Route::post('maincat', [\App\Http\Controllers\MainCategoryController::class, 'store']);
 Route::post('category', [\App\Http\Controllers\CategoryController::class, 'store']);
 Route::post('post', [\App\Http\Controllers\PostSingleController::class, 'store']);
-
-
-Route::view('test', 'myPDF');
 
 Route::post('/filter', [\App\Http\Controllers\FilterController::class, 'index']);
 
@@ -60,6 +57,7 @@ Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('bd.pdf'
 
 Route::resource('plans', PlanController::class);
 
+//Route::get('search', [SearchController::class, 'index']);
 Route::post('/search', [SearchController::class, 'index'])->name('search');
 Route::post('/tag/{id}', [TagController::class, 'index'])->name('tag');
 

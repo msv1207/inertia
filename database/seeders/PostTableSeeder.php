@@ -28,18 +28,18 @@ class PostTableSeeder extends Seeder
 //            'updated_at'    => Carbon::now(),
 //        ]);
 //        factory(Post::class, 20)->create();
-       Post::factory()->count(20)->create();
+        Post::factory()->count(20)->create();
 //        Category::factory()->count(10)->create();
 //       SubCategory::factory()->count(3)->create();
 
-// Populate users
+        // Populate users
 //        factory(Category::class, 10)->create();
 //        factory(SubCategory::class, 3)->create();
 
-// Get all the roles attaching up to 3 random roles to each user
+        // Get all the roles attaching up to 3 random roles to each user
         $roles = Category::all();
 
-// Populate the pivot table
+        // Populate the pivot table
         Post::all()->each(function ($user) use ($roles) {
             $user->categories()->attach(
                 $roles->random(rand(1, 10))->pluck('id')->toArray()
@@ -48,7 +48,7 @@ class PostTableSeeder extends Seeder
 
         $roles = SubCategory::all();
 
-// Populate the pivot table
+        // Populate the pivot table
         Category::all()->each(function ($user) use ($roles) {
             $user->sub_categories()->attach(
                 $roles->random(rand(1, 3))->pluck('id')->toArray()

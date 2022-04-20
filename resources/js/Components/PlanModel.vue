@@ -5,15 +5,18 @@
             Create plan
         </button>
 
+
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title text-green-700" id="exampleModalLabel">Create plan</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <label for="title">title</label>
+
                         <form @submit.prevent="submit()">
                             <div>
                                 <input
@@ -34,8 +37,8 @@
                                 />
                             </div>
                             <div>
-                                <label for="description">description</label>
-                                <input
+                                <label  for="description">description</label>
+                                <textarea
                                     v-model="form.description"
                                     type="text"
                                     id="description"
@@ -53,8 +56,11 @@
                                 />
                             </div>
                             <div id="app">
+                                <label  for="data-picker">calendar</label>
+
                                 <date-picker
                                     language="fr"
+                                    :initialDates="dates"
                                     :dateInput="dateInput"
                                     :show-helper-buttons="true"
                                     :switch-button-initial="true"
@@ -63,7 +69,6 @@
                                 />
                             </div>
 
-                            <!-- submit -->
                             <div class="flex items-center mt-4">
                                 <button
                                     class="
@@ -107,22 +112,6 @@ import BreezeNavLink from "@/Components/NavLink.vue";
     import { onBackgroundMessage } from "firebase/messaging/sw";
     import Modal from "@/Jetstream/Modal";
 
-    // import {messaging} from 'firebase/messaging'
-    // import {firebase} from 'firebase/app';
-
-    // const messaging = getMessaging();
-    // onBackgroundMessage(messaging, (payload) => {
-//     console.log('[firebase-messaging-sw.js] Received background message ', payload);
-//     // Customize notification here
-//     const notificationTitle = 'Background Message Title';
-//     const notificationOptions = {
-//         body: 'Background Message body.',
-//         icon: '/firebase-logo.png'
-//     };
-//
-//     self.registration.showNotification(notificationTitle,
-//         notificationOptions);
-// });
 
     const firebaseConfig = {
     // apiKey: process.env.API_KEY,
@@ -207,19 +196,25 @@ import BreezeNavLink from "@/Components/NavLink.vue";
     props: {
     plans: [],
     dateInput: {
-    placeholder: 'Select Date',
+    placeholder: 'Select Date'
 },
 },
 
     data() {
+
     return {
-    events: [],
+        dates: [ Date.now(),  Date.now()],
+
+        events: [],
 
 }
+
+
 },
     watch: {
     root: {
-    deep: true,
+
+        deep: true,
     handler: (newRoot) => {
     console.log(newRoot);
 },

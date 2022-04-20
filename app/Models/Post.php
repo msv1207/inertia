@@ -19,7 +19,7 @@ class Post extends Model
     'title',
     'description',
         'category_id',
-        'tag'
+        'tag',
     ];
     protected ?array $mappingProperties = [
         'title' => [
@@ -36,6 +36,7 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
     public function tags()
     {
         return $this->hasMany(Tag::class);

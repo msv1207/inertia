@@ -41,23 +41,11 @@
 <!--                                </div>-->
                             <PostModel  :id="node.id" v-if="node.sub_category_id"/>
 
-<!--                            <div >-->
-<!--            <Link-->
-<!--                              class=  "text-black"-->
-<!--                :href="route('posts.edit', node.id)"-->
-<!--            >-->
-<!--               Edit-->
-<!--            </Link>-->
-<!--    <EditModel/>-->
-<!--    <div >-->
-        <!-- Button trigger modal -->
                             <span> &nbsp;</span>
-                            <button  v-if="node.description" type="button" class="btn-rounded btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                            <button  v-if="node.description" type="button"             style="color: #198754"
+                                     data-bs-toggle="modal" data-bs-target="#exampleModal2">
             <!--        <i class="fas fa-magic"></i>-->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-            </svg>
+                                <i class="bi bi-plus-circle-fill"></i>
                             </button>
                                 </div>
     </div>
