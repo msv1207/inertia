@@ -1,7 +1,7 @@
 <template>
     <!-- Button trigger modal -->
 
-    <button @click="Show=true"
+    <button @click="Show=!Show"
         class="btn-rounded btn-outline-success"
             type="button"  data-bs-toggle="modal" data-bs-target="#table"
     ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -28,7 +28,7 @@
                             <label for="title">Title Post</label>
                             <input
                                 type="text"
-                                v-model="form4.title"
+                                v-model="formT.title"
                                 class="
                                                     w-full
                                                     px-4
@@ -43,9 +43,9 @@
                             />
                         </div>
                         <div >
-                            <label for="discription">Description</label>
+                            <label for="description">Description</label>
                             <vue-editor
-                                v-model="form4.description"
+                                v-model="formT.description"
 
                             >
                             </vue-editor>
@@ -68,7 +68,7 @@
 <!--                            <label for="title">Title Post</label>-->
 <!--                            <input-->
 <!--                                type="text"-->
-<!--                                v-model="form4.title"-->
+<!--                                v-model="formT.title"-->
 <!--                                class="-->
 <!--                                                    w-full-->
 <!--                                                    px-4-->
@@ -85,7 +85,7 @@
 <!--                        <div v-if="node.description">-->
 <!--                            <label for="title">Description</label>-->
 <!--                            <vue-editor-->
-<!--                                v-model="form4.description"-->
+<!--                                v-model="formT.description"-->
 
 <!--                            >-->
 <!--                            </vue-editor>-->
@@ -107,7 +107,7 @@
 <!--                            <label for="title">Title Post</label>-->
 <!--                            <input-->
 <!--                                type="text"-->
-<!--                                v-model="form4.title"-->
+<!--                                v-model="formT.title"-->
 <!--                                class="-->
 <!--                                                    w-full-->
 <!--                                                    px-4-->
@@ -124,7 +124,7 @@
 <!--                        <div v-if="node.description">-->
 <!--                            <label for="title">Description</label>-->
 <!--                            <vue-editor-->
-<!--                                v-model="form4.description"-->
+<!--                                v-model="formT.description"-->
 
 <!--                            >-->
 <!--                            </vue-editor>-->
@@ -160,7 +160,7 @@ export default {
     },
     data(){
         return {
-            form4 : this.$inertia.form({
+            formT : this.$inertia.form({
                 // categoryId:this.id,
                 title: this.node.title,
                 description: this.node.description,
@@ -174,7 +174,7 @@ export default {
     methods:{
 
         updatePost(id){
-            this.form4.put('/post/' + id);
+            this.formT.put('/post/' + id);
         },
     }
 }

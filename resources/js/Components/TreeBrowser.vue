@@ -13,32 +13,33 @@
 <!--    <button-->
 <!--          @click="nodeClicked(node)"-->
 <!--      >{{isExpanded(node) ? '- ' : '+ '}}</button>-->
-                            <div >
+                            <div class="holder">
+
                             <button  @click="nodeClicked(node)" v-if="isExpanded(node) && node.description==null " >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                     <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                 </svg>
 
                             </button>
-                            </div>
+
                             <button @click="nodeClicked(node)" v-else-if="node.description==null">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
                                     <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
                                 </svg>
 
-
                             </button>
-                            <span> &nbsp;</span>
 
                             <!--                            <CButton color="dark" variant="ghost">Dark</CButton>-->
 
                             <TitleModel   :node="node"/>
 <!--                           <button class="btn-rounded btn-outline-dark" @click="editPost(node.id)">{{node.title}}</button>-->
 <!--                            <div v-if="node.sub_category_id == null && node.description==null">-->
-                                <CategoryModel :sub_category="node.id" v-if="node.sub_category_id == null && node.description==null"/>
+                                <div class="block">
+
+                                <CategoryModel  :sub_category="node.id" v-if="node.sub_category_id == null && node.description==null"/>
 <!--                                </div>-->
-                            <PostModel :id="node.id" v-if="node.sub_category_id"/>
+                            <PostModel  :id="node.id" v-if="node.sub_category_id"/>
 
 <!--                            <div >-->
 <!--            <Link-->
@@ -58,6 +59,8 @@
                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
             </svg>
                             </button>
+                                </div>
+    </div>
 
 
         <!-- Modal -->
@@ -100,53 +103,11 @@
                             </div>
                         </form>
 
-<!--                    </div>-->
-                    <!--                    <div class="modal-footer">-->
-                    <!--                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>-->
-                    <!--                    </div>-->
+
                 </div>
             </div>
         </div>
-<!--    <TagModel :node="node"/>-->
-<!--                                <p class="active:bg-gray-100" @click="isOpen = !isOpen"> new tag</p>-->
 
-<!--            <div v-if="isOpen">-->
-<!--                    <form @submit.prevent="createNewTag(node.id)">-->
-<!--                        <div>-->
-<!--                            <label for="title">Title tag</label>-->
-<!--                            <input-->
-<!--                                type="text"-->
-<!--                                :id="node.id"-->
-<!--                                v-model="form3.tag"-->
-<!--                                class="-->
-<!--                                                    w-full-->
-<!--                                                    px-4-->
-<!--                                                    py-2-->
-<!--                                                    mt-2-->
-<!--                                                    border-->
-<!--                                                    rounded-md-->
-<!--                                                    focus:outline-none-->
-<!--                                                    focus:ring-1-->
-<!--                                                    focus:ring-blue-600-->
-<!--                                                "-->
-<!--                            />-->
-<!--                        </div>-->
-<!--                        <div class="flex items-center mt-4">-->
-<!--                            <button-->
-<!--                                class="-->
-<!--                                                    px-6-->
-<!--                                                    py-2-->
-<!--                                                    text-white-->
-<!--                                                    bg-gray-900-->
-<!--                                                    rounded-->
-<!--                                                "-->
-<!--                            >-->
-<!--                                Save-->
-<!--                            </button>-->
-
-<!--                        </div>-->
-
-<!--                </form>-->
 </div>
 
 
@@ -305,6 +266,6 @@ export default {
     display:none
 }
 .holder:hover .block{
-    display:block;
+    display: inline-block;
 }
 </style>
