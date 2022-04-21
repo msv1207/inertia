@@ -1,5 +1,5 @@
 <template>
-    <Head title="Dashboard" />
+    <Head title="Dashboard"/>
 
     <BreezeAuthenticatedLayout>
         <template #header>
@@ -97,35 +97,28 @@
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import BreezeNavLink from "@/Components/NavLink.vue";
-import { Head } from "@inertiajs/inertia-vue3";
-import { Link } from "@inertiajs/inertia-vue3";
-import TreeBrowser from "@/components/TreeBrowser.vue";
-import { Inertia } from '@inertiajs/inertia'
-import { reactive } from 'vue'
-import draggable from 'vuedraggable'
-import DatePicker, { CalendarDialog } from 'vue-time-date-range-picker/dist/vdprDatePicker'
+import {Head} from "@inertiajs/inertia-vue3";
+import {Inertia} from '@inertiajs/inertia'
+import {reactive} from 'vue'
+import DatePicker, {CalendarDialog} from 'vue-time-date-range-picker/dist/vdprDatePicker'
 import 'vue-time-date-range-picker/dist/vdprDatePicker.min.css';
+
 export default {
-    setup () {
+    setup() {
         const form = reactive({
             title: null,
-            calendar:null,
-            description:null
+            calendar: null,
+            description: null
 
         })
 
 
-        return { form }
+        return {form}
     },
     name: "app",
     components: {
         BreezeAuthenticatedLayout,
         Head,
-        TreeBrowser,
-        BreezeNavLink,
-        Link,
-        draggable,
         DatePicker,
         CalendarDialog
     },
@@ -136,15 +129,14 @@ export default {
         },
     },
     methods: {
-        selectDate(date1, date2)
-        {
-            let arr=[]
+        selectDate(date1, date2) {
+            let arr = []
 
             arr.push(date1, date2);
-            this.form.calendar=arr;
+            this.form.calendar = arr;
         },
         submit() {
-            Inertia.put('/plans/'+ this.plan, this.form)
+            Inertia.put('/plans/' + this.plan, this.form)
         },
     },
 };

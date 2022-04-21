@@ -4,11 +4,9 @@
 
     <button @click="Show=!Show" type="button"            style="color: #198754"
             data-bs-toggle="modal" data-bs-target="#test">
-        <!--        <i class="fas fa-magic"></i>-->
         <i class="bi bi-plus-circle-fill"></i>
     </button>
 
-    <!-- Modal -->
     <div v-if="Show" class="modal fade " id="test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -22,7 +20,7 @@
                             <label for="title">Title Post</label>
                             <input
                                 type="text"
-                                v-model="form4.title"
+                                v-model="myform.title"
                                 class="
                                                     w-full
                                                     px-4
@@ -36,14 +34,13 @@
                                                 "
                             />
                         </div>
-                        <div>
-                            <label for="title">Description</label>
-                            <vue-editor
-                                v-model="form4.description"
-
-                            >
-                                            </vue-editor>
-                        </div>
+                      <div >
+                        <label for="title">Description</label>
+                        <vue-editor
+                            v-model="myform.description"
+                        >
+                        </vue-editor>
+                      </div>
                         <!-- submit -->
                         <div class="modal-footer modal-lg">
                             <button
@@ -55,18 +52,14 @@
                     </form>
 
                 </div>
-                <!--                    <div class="modal-footer">-->
-                <!--                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>-->
-                <!--                    </div>-->
             </div>
         </div>
     </div>
 
 </template>
 <script>
-//importing bootstrap 5
-import 'bootstrap-icons/font/bootstrap-icons.css'
 
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import { VueEditor } from "vue3-editor";
@@ -77,13 +70,12 @@ export default {
     },
     data(){
         return {
-            form4 : this.$inertia.form({
-                categoryId:this.id,
-                title: null,
-                description: null,
+            myform: this.$inertia.form({
+              description: "",
+              categoryId: this.id,
+              title: '',
             }),
-            Show:false
-
+            Show:false,
         }
     },
     props:{
@@ -91,7 +83,7 @@ export default {
     },
     methods:{
         createNew() {
-            this.form4.post('/post');
+            this.myform.post('/post');
         },
     }
 }

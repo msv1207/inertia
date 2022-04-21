@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostCreateRequest;
+use App\Http\Requests\PostUpdateRequest;
 
 class PostController extends Controller
 {
@@ -36,10 +38,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return Inertia::render('Post/Create');
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -47,68 +46,23 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
-        $mainCat = SubCategory::create(['title' => $request->mainCategoryTittle]);
-        $cat = $mainCat->categories()->save(Category::create(['title' => $request->categoryTitle]));
-        $cat->posts()->save(Post::create(['title' => $request->title,
-            'description'=> $request->description, ]));
+//        dd($request->all());
+        Post::create(['title'=>$request->title, 'description'=>$request->description, 'category_id'=>$request->categoryId]);
 
-        return $this->index();
+        return (new PostController)->index();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
+    public function update($id, PostUpdateRequest $request)
     {
-        return Inertia::render('Post/Show', [
-            'posts' => [
-            'id' => $post->id,
-            'title' => $post->title,
-            'description' => $post->description,
-    ], ]);
-    }
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $post->description = $request->description;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        return Inertia::render('Post/Edit', [
-            'post' => [
-                'id' => $post->id,
-                'title' => $post->title,
-                'mainCategoryTitle' => $post->category->title,
-                'categoryTitle' => $post->category->sub_category->title,
-                'description' => $post->description,
-            ],
-        ]);
-    }
+        $post->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Post $post)
-    {
-        $post
-           ->update(['title' => $request->title, 'description'=>$request->description]);
-        $post->category
-           ->update(['title' => $request->categoryTitle]);
-        $post->category->sub_category
-            ->update([['title' => $request->mainCategoryTitle]]);
-
-        return $this->index();
+        return (new PostController)->index();
     }
 
     /**

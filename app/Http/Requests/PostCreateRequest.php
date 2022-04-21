@@ -24,10 +24,9 @@ class PostCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'mainCategoryTittle' => 'required|string|max:255',
-            'categoryTitle' => 'required|string|max:255',
+            'categoryId' => 'required',
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
         ];
     }
 }

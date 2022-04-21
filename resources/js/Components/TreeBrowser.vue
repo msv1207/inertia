@@ -10,9 +10,6 @@
                               :key="node.title"
                               :style="{'margin-left': `${depth * 20}px`}"
             >
-<!--    <button-->
-<!--          @click="nodeClicked(node)"-->
-<!--      >{{isExpanded(node) ? '- ' : '+ '}}</button>-->
                             <div class="holder">
 
                             <button  @click="nodeClicked(node)" v-if="isExpanded(node) && node.description==null " >
@@ -29,29 +26,21 @@
                                 </svg>
 
                             </button>
-
-                            <!--                            <CButton color="dark" variant="ghost">Dark</CButton>-->
-
                             <TitleModel   :node="node"/>
-<!--                           <button class="btn-rounded btn-outline-dark" @click="editPost(node.id)">{{node.title}}</button>-->
-<!--                            <div v-if="node.sub_category_id == null && node.description==null">-->
                                 <div class="block">
 
                                 <CategoryModel  :sub_category="node.id" v-if="node.sub_category_id == null && node.description==null"/>
-<!--                                </div>-->
                             <PostModel  :id="node.id" v-if="node.sub_category_id"/>
 
                             <span> &nbsp;</span>
                             <button  v-if="node.description" type="button"             style="color: #198754"
                                      data-bs-toggle="modal" data-bs-target="#exampleModal2">
-            <!--        <i class="fas fa-magic"></i>-->
                                 <i class="bi bi-plus-circle-fill"></i>
                             </button>
                                 </div>
     </div>
 
 
-        <!-- Modal -->
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -81,7 +70,6 @@
                                 />
                             </div>
 
-                            <!-- submit -->
                             <div class="modal-footer">
                                 <button
                                     class="btn btn-success"
@@ -153,7 +141,6 @@ export default {
         category: '',
         categoryid: null,
         mainCategory: '',
-        itemKey: null,
         tag: '',
         id: null,
         depth: {
@@ -177,13 +164,9 @@ export default {
     name: "TreeBrowser",
     components: {
         TitleModel,
-        EditModel,
-        Link,
         VueDraggableNext,
-        BButton,
         TagModel,
         CategoryModel,
-        CButton,
         PostModel
 
     },
@@ -192,12 +175,6 @@ export default {
     data() {
         return {
             drag: false,
-            form2 : this.$inertia.form({
-                mainCategoryTitle: this.mainCategory,
-                categoryTitle: this.category,
-                title: null,
-                description: null,
-            }),
             form3 : this.$inertia.form({
                 tag: this.tag,
                 id: this.id
@@ -208,10 +185,7 @@ export default {
         };
     },
     methods: {
-        editPost(id)
-        {
-// Inertia.post()
-        },
+
         createNewTag(id)
         {
             this.form3.post('/tag/'+ id);
@@ -221,9 +195,6 @@ export default {
             evt.added.element.category_id=this.categoryid;
             Inertia.put('tree/1', evt.added.element)
 
-        },
-        createNew() {
-            this.form2.post('/tree');
         },
         isExpanded(node) {
             return this.expanded.indexOf(node) !== -1;
@@ -245,12 +216,6 @@ export default {
 
 <style scoped lang="css">
 .block{
-    /*position:absolute;*/
-    /*left:0;*/
-    /*bottom:0;*/
-    /*right:0;*/
-    /*background:rgba(255,255,255, 0.7);*/
-    /*padding:20px;*/
     display:none
 }
 .holder:hover .block{

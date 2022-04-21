@@ -1,12 +1,10 @@
 <template>
     <div >
-        <!-- Button trigger modal -->
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Create plan
         </button>
 
 
-        <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -85,42 +83,34 @@
                         </form>
 
                     </div>
-                    <!--                    <div class="modal-footer">-->
-                    <!--                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>-->
-                    <!--                    </div>-->
+
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-//importing bootstrap 5
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import BreezeNavLink from "@/Components/NavLink.vue";
     import { Head } from "@inertiajs/inertia-vue3";
-    import { Link } from "@inertiajs/inertia-vue3";
-    import TreeBrowser from "@/components/TreeBrowser.vue";
     import { Inertia } from '@inertiajs/inertia'
     import { reactive } from 'vue'
-    import draggable from 'vuedraggable'
     import DatePicker, { CalendarDialog } from 'vue-time-date-range-picker/dist/vdprDatePicker'
     import 'vue-time-date-range-picker/dist/vdprDatePicker.min.css'
     import { initializeApp } from "firebase/app";
     import { getMessaging , onMessage, getToken} from "firebase/messaging";
-    import { onBackgroundMessage } from "firebase/messaging/sw";
-    import Modal from "@/Jetstream/Modal";
+
 
 
     const firebaseConfig = {
-    // apiKey: process.env.API_KEY,
-    // authDomain: process.env.AUTH_DOMAIN,
-    // projectId: process.env.PROJECT_ID,
-    // storageBucket: process.env.STORAGE_BUCKET,
-    // messagingSenderId: process.env.MESENGER_SENDING_ID,
-    // appid: process.env.APP_ID,
-    // measurementId: process.env.MEASUREMENT_ID
+    // apiKey: process.env.VUE_APP_API_KEY,
+    // authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+    // projectId: process.env.VUE_APP_PROJECT_ID,
+    // storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+    // messagingSenderId: process.env.VUE_APP_MESENGER_SENDING_ID,
+    // appid: process.env.VUE_APP_APP_ID,
+    // measurementId: process.env.VUE_APP_MEASUREMENT_ID,
     apiKey: "AIzaSyA2t8wf8-wUmlSF7acgDpoeupB71nuhJfU",
     authDomain: "laravel-6ac8c.firebaseapp.com",
     databaseURL: "https://laravel-6ac8c-default-rtdb.europe-west1.firebasedatabase.app",
@@ -132,22 +122,8 @@ import BreezeNavLink from "@/Components/NavLink.vue";
 };
     let firebase = initializeApp(firebaseConfig);
 
-// const messaging = getMessaging();
-// onMessage(messaging, (payload) => {
-//     console.log('[firebase-messaging-sw.js] Received background message ', payload);
-//     // Customize notification here
-//     const notificationTitle = 'Background Message Title';
-//     const notificationOptions = {
-//         body: 'Background Message body.',
-//         icon: '/firebase-logo.png'
-//     };
-//     //
-//     // self.registration.showNotification(notificationTitle,
-//     //     notificationOptions);
-// });
 
     let messaging = getMessaging(firebase);
-// // const messaging = firebase.messaging();
     onMessage(messaging, (payload) => {
     console.log('Message received. ', payload);
     navigator.serviceWorker.getRegistration('/firebase-cloud-messaging-push-scope').then(registration => {
@@ -159,8 +135,7 @@ import BreezeNavLink from "@/Components/NavLink.vue";
 
 });
 
-// let app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
+
     class Event {
     constructor(name, value) {
     this.name = name;
@@ -186,15 +161,10 @@ import BreezeNavLink from "@/Components/NavLink.vue";
     components: {
     BreezeAuthenticatedLayout,
     Head,
-    TreeBrowser,
-    BreezeNavLink,
-    Link,
-    draggable,
     DatePicker,
     CalendarDialog
 },
     props: {
-    plans: [],
     dateInput: {
     placeholder: 'Select Date'
 },
@@ -226,19 +196,15 @@ import BreezeNavLink from "@/Components/NavLink.vue";
     submit() {
     getToken(messaging, { vapidKey: 'BFlFYuVmWXfzrDWTZhY0_uRLUT4Hl8cK8DuRocE7ocIJn311UXJWZTI4zcLcQdamOD5DR8G1hEn8soVGqhby4_0' }).then((currentToken) => {
     if (currentToken) {
-    // Send the token to your server and update the UI if necessary
-    // ...
+
     this.form.token=currentToken;
     Inertia.post('/plans', this.form)
 
 } else {
-    // Show permission request UI
     console.log('No registration token available. Request permission to generate one.');
-    // ...
 }
 }).catch((err) => {
     console.log('An error occurred while retrieving token. ', err);
-    // ...
 });
 
 },
@@ -251,16 +217,8 @@ import BreezeNavLink from "@/Components/NavLink.vue";
 },
 
 
-    destroy(id) {
-    this.$inertia.delete(route("plans.destroy", id));
-},
 
-    sort: function(s){
-    if(s === this.currentSort) {
-    this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
-}
-    this.currentSort = s;
-}
+
 },
 };
 </script>

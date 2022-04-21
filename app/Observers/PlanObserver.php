@@ -12,7 +12,7 @@ class PlanObserver
     /**
      * Handle the plan "created" event.
      *
-     * @param  \App\Models\Plan  $plan
+     * @param \App\Models\Plan $plan
      * @return void
      */
     public function creating(Plan $plan)
@@ -22,7 +22,7 @@ class PlanObserver
     /**
      * Handle the plan "created" event.
      *
-     * @param  \App\Models\Plan  $plan
+     * @param \App\Models\Plan $plan
      * @return void
      */
     public function created(Plan $plan)
@@ -42,7 +42,7 @@ class PlanObserver
     /**
      * Handle the plan "updated" event.
      *
-     * @param  \App\Models\Plan  $plan
+     * @param \App\Models\Plan $plan
      * @return void
      */
     public function updated(Plan $plan)
@@ -61,7 +61,7 @@ class PlanObserver
     /**
      * Handle the plan "deleted" event.
      *
-     * @param  \App\Models\Plan  $plan
+     * @param \App\Models\Plan $plan
      * @return void
      */
     public function deleted(Plan $plan)
@@ -74,7 +74,7 @@ class PlanObserver
     /**
      * Handle the plan "restored" event.
      *
-     * @param  \App\Models\Plan  $plan
+     * @param \App\Models\Plan $plan
      * @return void
      */
     public function restored(Plan $plan)
@@ -84,7 +84,7 @@ class PlanObserver
     /**
      * Handle the plan "force deleted" event.
      *
-     * @param  \App\Models\Plan  $plan
+     * @param \App\Models\Plan $plan
      * @return void
      */
     public function forceDeleted(Plan $plan)

@@ -1,11 +1,9 @@
 <template>
     <div class="container p-5">
-        <!-- Button trigger modal -->
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Create tag
         </button>
 
-        <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -46,16 +44,13 @@
                         </form>
 
                     </div>
-                    <!--                    <div class="modal-footer">-->
-                    <!--                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>-->
-                    <!--                    </div>-->
+
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-//importing bootstrap 5
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 export default {
