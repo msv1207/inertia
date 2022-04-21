@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Post;
 
 use App\Models\Category;
 use App\Models\Post;
@@ -8,6 +8,7 @@ use App\Models\SubCategory;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Post;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 
 class FilterController extends Controller
 {

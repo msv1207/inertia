@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Post;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -9,7 +9,6 @@ class CategoryController extends Controller
 {
     public function store(Request $request)
     {
-//        dd($request->all());
         Category::create(['title'=>$request->categoryTitle, 'sub_category_id'=>$request->sub_category_id]);
 
         return (new PostController)->index();
