@@ -49,14 +49,7 @@ class TreeController extends Controller
         return (new PostController)->index();
     }
 
-//    public function update(UpdateTreeRequest $request)
-//    {
-//        $posts = Post::find($request->id);
-//        $posts->category_id = $request->category_id;
-//        $posts->save();
-//
-//        return (new PostController)->index();
-//    }
+
 
     /**
      * Remove the specified resource from storage.

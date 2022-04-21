@@ -16,12 +16,12 @@
                 </div>
                 <div class="modal-body modal-lg">
                     <form @submit.prevent="createNew()">
-                        <div>
-                            <label for="title">Title Post</label>
-                            <input
-                                type="text"
-                                v-model="myform.title"
-                                class="
+                      <div>
+                        <label for="title">Title Post</label>
+                        <input
+                            type="text"
+                            v-model="form4.title"
+                            class="
                                                     w-full
                                                     px-4
                                                     py-2
@@ -32,23 +32,32 @@
                                                     focus:ring-1
                                                     focus:ring-blue-600
                                                 "
-                            />
-                        </div>
-                      <div >
-                        <label for="title">Description</label>
-                        <vue-editor
-                            v-model="myform.description"
-                        >
-                        </vue-editor>
+                        />
                       </div>
-                        <!-- submit -->
-                        <div class="modal-footer modal-lg">
-                            <button
-                                class="btn btn-success"
-                            >
-                                Save
-                            </button>
-                        </div>
+                        <label for="title">Description</label>
+                      <textarea type="text"
+                                v-model="form4.description"
+                                class="
+                                                    w-full
+                                                    px-4
+                                                    py-2
+                                                    mt-2
+                                                    border
+                                                    rounded-md
+                                                    focus:outline-none
+                                                    focus:ring-1
+                                                    focus:ring-blue-600
+                                                ">
+
+                      </textarea>
+
+                      <div class="modal-footer">
+                        <button
+                            class="btn btn-success"
+                        >
+                          Save
+                        </button>
+                      </div>
                     </form>
 
                 </div>
@@ -70,8 +79,8 @@ export default {
     },
     data(){
         return {
-            myform: this.$inertia.form({
-              description: "",
+            form4: this.$inertia.form({
+              description: '',
               categoryId: this.id,
               title: '',
             }),
@@ -83,7 +92,7 @@ export default {
     },
     methods:{
         createNew() {
-            this.myform.post('/post');
+            this.form4.post('/post');
         },
     }
 }

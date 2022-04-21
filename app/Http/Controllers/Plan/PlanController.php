@@ -29,7 +29,6 @@ class PlanController extends Controller
         auth()->user()->update(['device_token'=>$request->token]);
 
         $date = StrInTime::strToDate($request->calendar);
-//        $date['date1']=date("l dS F Y h:i:s A", $date['date1'] );
 
         Plan::create([
                 'name'=>$request->title,
