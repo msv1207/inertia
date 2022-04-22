@@ -14,9 +14,9 @@ class SearchController extends Controller
         $result = Post::search($request->search)->get();
 
 //        $result = Post::searchByQuery(['match' => ['title' => $request->search]]);
-dd($result);
+//dd($result);
         return Inertia::render('Post/Index', [
-        'searchRes' =>$result,
+        'searchRes' =>$result->get(),
     ]);
     }
 }
