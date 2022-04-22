@@ -15,8 +15,6 @@ class Plan extends Model
 
     public function routeNotificationForSlack($notification)
     {
-
-//        env('SLACK_BOT');
         return  env('SLACK_BOT');
     }
 

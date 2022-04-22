@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Plan;
 
+use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use App\Services\DateForUser;
 use PDF;
-use App\Http\Controllers\Controller;
 
 class PDFController extends Controller
 {

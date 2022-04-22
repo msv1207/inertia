@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Post\FilterController;
-use App\Http\Controllers\Post\CategoryController;
-use App\Http\Controllers\Post\MainCategoryController;
 use App\Http\Controllers\Auth\GoogleSocialiteController;
 use App\Http\Controllers\Plan\PDFController;
 use App\Http\Controllers\Plan\PlanController;
+use App\Http\Controllers\Post\CategoryController;
+use App\Http\Controllers\Post\FilterController;
+use App\Http\Controllers\Post\MainCategoryController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Post\SearchController;
 use App\Http\Controllers\Post\TagController;
@@ -42,26 +42,23 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::resource('tree', TreeController::class, [
     'only' => ['store', 'update'],
-]);
+])->middleware(['auth', 'verified']);
 
-Route::post('maincat', [MainCategoryController::class, 'store']);
-Route::post('category', [CategoryController::class, 'store']);
-//Route::post('post', [PostSingleController::class, 'store']);
+Route::post('maincat', [MainCategoryController::class, 'store'])->middleware(['auth', 'verified']);
+Route::post('category', [CategoryController::class, 'store'])->middleware(['auth', 'verified']);
 
-Route::post('/filter', [FilterController::class, 'index']);
+Route::post('/filter', [FilterController::class, 'index'])->middleware(['auth', 'verified']);
 
-Route::put('maincat/{id}', [MainCategoryController::class, 'update']);
-Route::put('category/{id}', [CategoryController::class, 'update']);
-//Route::put('post/{id}', [PostSingleController::class, 'update']);
+Route::put('maincat/{id}', [MainCategoryController::class, 'update'])->middleware(['auth', 'verified']);
+Route::put('category/{id}', [CategoryController::class, 'update'])->middleware(['auth', 'verified']);
 
-Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('bd.pdf');
+Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->middleware(['auth', 'verified'])->name('bd.pdf');
 
-Route::resource('plans', PlanController::class);
+Route::resource('plans', PlanController::class)->middleware(['auth', 'verified']);
 
-//Route::get('search', [SearchController::class, 'index']);
-Route::post('/search', [SearchController::class, 'index'])->name('search');
-Route::post('/tag/{id}', [TagController::class, 'index'])->name('tag');
+Route::post('/search', [SearchController::class, 'index'])->middleware(['auth', 'verified'])->name('search');
+Route::post('/tag/{id}', [TagController::class, 'index'])->middleware(['auth', 'verified'])->name('tag');
 
-Route::resource('post', PostController::class);
+Route::resource('post', PostController::class)->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

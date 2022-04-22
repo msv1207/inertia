@@ -8,9 +8,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y imagemagick libzip-dev libpng-dev nano
 
 # Install selected extensions and other stuff
-RUN apt-get -y install php8.0-pgsql php8.0-mysql php8.0-sqlite php8.0-redis php8.0-bcmath php8.0-gd php8.0-imagick php8.0-dev
-
-RUN docker-php-ext-install pdo pdo_mysql
+RUN apt-get -y install php8.0-pgsql php-mysql php8.0-sqlite php8.0-redis php8.0-bcmath php8.0-gd php8.0-imagick php8.0-dev
+#RUN docker-php-ext-install php-mysql
+RUN apt-get -y pdo pdo_mysql
 #    && docker-php-ext-enable pdo_mysql
 
 COPY ./docker/php-fpm/php-ini-overrides.ini /etc/php/8.0/fpm/conf.d/99-overrides.ini
