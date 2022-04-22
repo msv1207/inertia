@@ -141,6 +141,10 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Barryvdh\DomPDF\ServiceProvider::class,
+        NotificationChannels\Telegram\TelegramServiceProvider::class,
+        Elasticquent\ElasticquentServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -193,7 +197,10 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+
     ])->toArray(),
 
 ];

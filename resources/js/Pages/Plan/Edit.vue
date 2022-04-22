@@ -1,10 +1,10 @@
 <template>
-    <Head title="Dashboard" />
+    <Head title="Dashboard"/>
 
     <BreezeAuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Create
+                Edit
             </h2>
         </template>
 
@@ -14,10 +14,11 @@
                     <div class="p-6 bg-white border-b border-gray-200">
                         <form @submit.prevent="submit">
                             <div>
-                                <label for="title">Title</label>
+                                <label for="title">title</label>
                                 <input
-                                    type="text"
                                     v-model="form.title"
+                                    type="text"
+                                    id="title"
                                     class="
                                         w-full
                                         px-4
@@ -31,12 +32,12 @@
                                     "
                                 />
                             </div>
-                            <div class="mt-4">
-                                <label for="title">Description</label>
-                                <textarea
-                                    name="description"
-                                    type="text"
+                            <div>
+                                <label for="description">description</label>
+                                <input
                                     v-model="form.description"
+                                    type="text"
+                                    id="description"
                                     class="
                                         w-full
                                         px-4
@@ -48,8 +49,17 @@
                                         focus:ring-1
                                         focus:ring-blue-600
                                     "
-                                >
-                                </textarea>
+                                />
+                            </div>
+                            <div id="app">
+                                <date-picker
+                                    language="fr"
+                                    :dateInput="dateInput"
+                                    :show-helper-buttons="true"
+                                    :switch-button-initial="true"
+                                    :is-monday-first="true"
+                                    @date-applied="selectDate"
+                                />
                             </div>
 
                             <!-- submit -->
@@ -63,9 +73,20 @@
                                         rounded
                                     "
                                 >
-                                    Save
+                                    send
                                 </button>
                             </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+
                         </form>
                     </div>
                 </div>
@@ -76,25 +97,46 @@
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import BreezeLabel from "@/Components/Label";
-import { Head } from "@inertiajs/inertia-vue3";
-import { useForm } from "@inertiajs/inertia-vue3";
+import {Head} from "@inertiajs/inertia-vue3";
+import {Inertia} from '@inertiajs/inertia'
+import {reactive} from 'vue'
+import DatePicker, {CalendarDialog} from 'vue-time-date-range-picker/dist/vdprDatePicker'
+import 'vue-time-date-range-picker/dist/vdprDatePicker.min.css';
+
 export default {
+    setup() {
+        const form = reactive({
+            title: null,
+            calendar: null,
+            description: null
+
+        })
+
+
+        return {form}
+    },
+    name: "app",
     components: {
         BreezeAuthenticatedLayout,
         Head,
+        DatePicker,
+        CalendarDialog
     },
-    setup() {
-        const form = useForm({
-            title: null,
-            description: null,
-        });
-
-        return { form };
+    props: {
+        plan: Object,
+        dateInput: {
+            placeholder: 'Select Date',
+        },
     },
     methods: {
+        selectDate(date1, date2) {
+            let arr = []
+
+            arr.push(date1, date2);
+            this.form.calendar = arr;
+        },
         submit() {
-            this.form.post(route("posts.store"));
+            Inertia.put('/plans/' + this.plan, this.form)
         },
     },
 };

@@ -2,20 +2,37 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "barryvdh/laravel-dompdf": "^1.0",
+        "codeception/module-asserts": "3.0.0",
+        "codeception/module-laravel": "dev-codecept5",
+        "codeception/module-phpbrowser": "3.0.0",
+        "elasticquent/elasticquent": "dev-master",
+        "google/apiclient": "^2.12",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.5.4",
+        "laravel-notification-channels/telegram": "^2.0",
         "laravel/framework": "^9.2",
         "laravel/jetstream": "^2.6",
         "laravel/sanctum": "^2.8",
+        "laravel/slack-notification-channel": "^2.4",
+        "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
+        "predis/predis": "^1.1",
+        "pusher/pusher-php-server": "^7.0",
+        "spatie/laravel-google-calendar": "^3.5",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "fossbarrow/laravel-phpcs": "dev-main",
+        "friendsofphp/php-cs-fixer": "^3.8",
         "laravel/breeze": "^1.8",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
@@ -35,7 +52,14 @@
             "Tests\\": "tests/"
         }
     },
+
     "scripts": {
+        "sniff": [
+            "./vendor/bin/php-cs-fixer fix -vvv --dry-run --show-progress=dots"
+        ],
+        "lint": [
+            "./vendor/bin/php-cs-fixer fix -vvv --show-progress=dots"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

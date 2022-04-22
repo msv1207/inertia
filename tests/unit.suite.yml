@@ -1,0 +1,10 @@
+actor: UnitTester
+modules:
+  enabled:
+    - Asserts
+    - Laravel:
+        part: ORM
+#    - \Helper\Unit
+#          cleanup: true
+#          run_database_migrations: true
+
