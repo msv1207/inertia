@@ -16,7 +16,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-//        Post::addAllToIndex();
+        Post::addAllToIndex();
     }
 
     /**
