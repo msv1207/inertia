@@ -145,8 +145,9 @@ export default {
             search: null,
         })
         function submit() {
-            Inertia.post('/search', form)
 
+            Inertia.post('/search', form)
+            this.show=true
         }
 
         return {
@@ -175,7 +176,7 @@ export default {
         return {
             pageNumber: 0,
             root: this.categories,
-
+            show:false
         }
     },
     watch: {

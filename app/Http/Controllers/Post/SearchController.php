@@ -11,7 +11,7 @@ class SearchController extends Controller
 {
     public function index(SearchRequest $request)
     {
-        $result = Post::search($request->search);
+        $result = Post::search($request->search)->get();
 
 //        $result = Post::searchByQuery(['match' => ['title' => $request->search]]);
 dump($result);
