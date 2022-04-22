@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use ElasticquentTrait, HasFactory;
+    use HasApiTokens, HasFactory, Notifiable, Searchable;
 
     public function routeNotificationForSlack($notification)
     {
@@ -21,16 +21,12 @@ class Post extends Model
         'category_id',
         'tag',
     ];
-    protected ?array $mappingProperties = [
-        'title' => [
-            'type' => 'text',
-            'analyzer' => 'standard',
-        ],
-        'description' => [
-            'type' => 'text',
-            'analyzer' => 'standard',
-        ],
-    ];
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->name,
+        ];
+    }
 
     public function category()
     {
