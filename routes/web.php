@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Post\FilterController;
 use App\Http\Controllers\Post\CategoryController;
-use App\Http\Controllers\Post\PostSingleController;
 use App\Http\Controllers\Post\MainCategoryController;
 use App\Http\Controllers\Auth\GoogleSocialiteController;
 use App\Http\Controllers\Plan\PDFController;
