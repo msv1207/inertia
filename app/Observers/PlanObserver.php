@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Plan;
+use Illuminate\Support\Facades\Cache;
 use App\Notifications\SendNotification;
 use Carbon\Carbon;
 use Spatie\GoogleCalendar\Event;
@@ -33,7 +34,7 @@ class PlanObserver
             'startDateTime' => Carbon::parse($plan->started_at),
             'endDateTime' => Carbon::parse($plan->ended_at),
         ])->id;
-
+        Cache::store('redis')->put('plans', $plan, 100);
         $plan->event_id = $event_id;
         $plan->save();
         $plan->notify(new SendNotification($plan->name));

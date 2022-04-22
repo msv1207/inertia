@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Plan;
 
+use Illuminate\Cache\RedisStore;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\PlanCreateRequest;
 use App\Http\Requests\PlanUpdateRequest;
 use App\Models\Plan;
@@ -15,11 +19,15 @@ class PlanController extends Controller
 {
     public function index()
     {
-        $plans = Plan::paginate(10);
-        $plans = DateForUser::index($plans);
+        $page = request()->get('page', 1);
+        $limit = request()->get('limit', 10);
+
+        Cache::remember('plans' . $page, 100, function() use ($limit){
+            return DateForUser::index(DB::table('plans')->paginate($limit));
+        });
 
         return Inertia::render('Plan/Index', [
-            'plans' => $plans,
+            'plans' => Cache::get('plans'. $page),
         ]);
     }
 
