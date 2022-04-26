@@ -11,10 +11,10 @@
                 <form @submit.prevent="submit">
                     <div class="input-group input-group-sm mb-3 ">
                         <input v-model="form.search"
-                               type="search" class="form-control    " placeholder="Search" aria-label="Search"
+                               type="search" class="form-control" placeholder="Search" aria-label="Search"
                                aria-describedby="search-addon"/>
                         <div class="input-group-append">
-                            <button type="submit" class="btn btn-success">
+                            <button @click="isshow=true" type="submit" class="btn btn-success">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-search" viewBox="0 0 16 16">
                                     <path
@@ -47,7 +47,7 @@
                                     @onClick="nodeWasClicked"
                                 />
                             </div>
-                            <div :style="  {  'float' : 'right', 'width':'70%'} " v-if="show">
+                            <div :style="  {  'float' : 'right', 'width':'70%'} " v-if="isshow">
 
 
                                 <table class="table table-hover">
@@ -69,7 +69,7 @@
 
                                         <td>{{ post.title }}
                                             <button @click="filter(post)" class="badge btn-success">{{
-                                                    post.tag
+                                                post.tag
                                                 }}
                                             </button>
                                         </td>
@@ -140,14 +140,14 @@ export default {
 
 
     setup() {
+        var isshow=false
 
         const form = reactive({
             search: null,
         })
         function submit() {
-
             Inertia.post('/search', form)
-            this.show=true
+
         }
 
         return {
@@ -176,7 +176,6 @@ export default {
         return {
             pageNumber: 0,
             root: this.categories,
-            show:false
         }
     },
     watch: {
