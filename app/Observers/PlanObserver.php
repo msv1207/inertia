@@ -3,11 +3,10 @@
 namespace App\Observers;
 
 use App\Models\Plan;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Cache\RedisStore;
 use App\Notifications\SendNotification;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Spatie\GoogleCalendar\Event;
 
 class PlanObserver

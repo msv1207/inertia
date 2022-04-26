@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTreeRequest;
-use App\Http\Requests\UpdateTreeRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\SubCategory;
@@ -48,8 +47,6 @@ class TreeController extends Controller
 
         return (new PostController)->index();
     }
-
-
 
     /**
      * Remove the specified resource from storage.

@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Post;
 
-use App\Models\Category;
-use App\Models\Post;
-use App\Models\SubCategory;
-use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Request;
-use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCreateRequest;
+//use Illuminate\Support\Facades\Request;
 use App\Http\Requests\PostUpdateRequest;
+use App\Models\Post;
+use App\Models\SubCategory;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
     public function __construct()
     {
-//        Post::addAllToIndex();
+        Post::addAllToIndex();
     }
 
     /**
@@ -39,7 +37,6 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -51,7 +48,7 @@ class PostController extends Controller
 //        dd($request->all());
         Post::create(['title'=>$request->title, 'description'=>$request->description, 'category_id'=>$request->categoryId]);
 
-        return (new PostController)->index();
+        return (new self)->index();
     }
 
     public function update($id, PostUpdateRequest $request)
@@ -62,7 +59,7 @@ class PostController extends Controller
 
         $post->save();
 
-        return (new PostController)->index();
+        return (new self)->index();
     }
 
     /**
