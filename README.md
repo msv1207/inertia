@@ -1,4 +1,13 @@
-It is my Plan and Post editor
+
+It is my plan and note editor in Laravel and vue
+
+Here used Google API, firebase api, elasticsearch, and Redis for cache, 
+
+/post you can see notes, 
+
+/plans you can see plans 
+
+See mockups https://app.moqups.com/Qw8iAhs1JmtaUxlKqtZ4lplhQOOQYNyS/view/page/a8ceb2615
 
 **Demo**
 
