@@ -23,3 +23,4 @@ http://stark-savannah-69486.herokuapp.com/
 7. `php artisan migrate`
 8. Make api keys from google console, firebase console, slack
 9. configure `firebase-messaging-sw.js`
+10. run `npm run prod`
