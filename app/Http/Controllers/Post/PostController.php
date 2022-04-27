@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCreateRequest;
-//use Illuminate\Support\Facades\Request;
 use App\Http\Requests\PostUpdateRequest;
 use App\Models\Post;
 use App\Models\SubCategory;
@@ -32,12 +31,6 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -45,7 +38,6 @@ class PostController extends Controller
      */
     public function store(PostCreateRequest $request)
     {
-//        dd($request->all());
         Post::create(['title'=>$request->title, 'description'=>$request->description, 'category_id'=>$request->categoryId]);
 
         return (new self)->index();
